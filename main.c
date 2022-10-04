@@ -3,7 +3,7 @@
     Nombre: César Soltero Pérez
     Fecha: 28/09/2022
 
-    Update: 3/10/2022
+    Update: 4/10/2022
 
     Cambios a hacer:
     -Función F no es compatible con Arduino, cambiar cuando se exporta
@@ -12,7 +12,7 @@
     -Función para cancelar escaner
 
     Objetivos:
-    -Función para regresar la posición de las esquinas (F2L)
+    -Función para regresar la posición de las aristas (F2L)
 
 */
 
