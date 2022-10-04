@@ -1,18 +1,18 @@
 //Algoritmo a imitar: Fridrich Reducido
 /*
-    Nombre: CÈsar Soltero PÈrez
+    Nombre: C√©sar Soltero P√©rez
     Fecha: 28/09/2022
 
     Update: 3/10/2022
 
     Cambios a hacer:
-    -FunciÛn F no es compatible con Arduino, cambiar cuando se exporta
-    -PrintFace NO ser· exportada a Arduino, sÛlo es una funciÛn auxiliar
-    -Validad colores (9 colores m·ximo de cada uno)
-    -FunciÛn para cancelar escaner
+    -Funci√≥n F no es compatible con Arduino, cambiar cuando se exporta
+    -PrintFace NO ser√° exportada a Arduino, s√≥lo es una funci√≥n auxiliar
+    -Validad colores (9 colores m√°ximo de cada uno)
+    -Funci√≥n para cancelar escaner
 
     Objetivos:
-    -FunciÛn para regresar la posiciÛn de las esquinas (F2L)
+    -Funci√≥n para regresar la posici√≥n de las esquinas (F2L)
 
 */
 
@@ -57,29 +57,29 @@ void PLLU2(); //Aristas horario
 void PLLZ(); //Aristas adyacentes
 void PLLH(); //Aristas opuestas (en cruz)
 void PLLSKIP(); //Reduce PLL a 4 algoritmmos
-int PLLCHECK(); //Revisa la primera fila por igualdad, regresa 0 si no hay igualdad, regresa 1-6 seg˙n el numero de cara
+int PLLCHECK(); //Revisa la primera fila por igualdad, regresa 0 si no hay igualdad, regresa 1-6 seg√∫n el numero de cara
 int isOpposite(int a, int b); //Determina si dos colores son opuestos, regresa 0 si FALSO, 1 si VERDADERO
-int isCubeDone(); //Inspecciona el cubo, dice si est· terminado
+int isCubeDone(); //Inspecciona el cubo, dice si est√° terminado
 
 //OLL
 void OLLDOT(); //Algoritmo para convertir el punto en cruz
 void OLLLINE(); //Algoritmo para convertir la linea en cruz
 void OLLL(); //Algoritmo para convertir la L en cruz
-void OLLA1(); //Cruz f·cil
+void OLLA1(); //Cruz f√°cil
 void OLLA2(); //Cruz (nave)
 void OLLA3(); //Pez 1
 void OLLA4(); //Pez 2
 void OLLA5(); //Nave
 void OLLA6(); //Nave 2
-void OLLA7(); //MoÒo
+void OLLA7(); //Mo√±o
 int isCrossDone(); //Inspecciona la cara superior y regresa 0 si NO hay cruz, regresa 1 si la hay
 int isL(); //Regresa 1 si hay una L (antes de la cruz)
-int isDot(); //Regresa 1 si sÛlo hay un punto (antes de la cruz)
-int isLine(); //Regresa 1 si hay una lÌnea (antes de cruz)
+int isDot(); //Regresa 1 si s√≥lo hay un punto (antes de la cruz)
+int isLine(); //Regresa 1 si hay una l√≠nea (antes de cruz)
 int isLastLayerDone(); //Regresa 1 si la cara superior ya se ha resuelto
 
 //F2L
-int getCornerPosition(int corner); //Duelve la posiciÛn (1-20) de la esquina down[][] que se quiere acomodar
+int getCornerPosition(int corner); //Duelve la posici√≥n (1-20) de la esquina down[][] que se quiere acomodar
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////                                                    Main                                           ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,6 +107,9 @@ int main()
 
     //Solving phase
     printf("La esquina 1 esta en la posicion: %i", getCornerPosition(1));
+    printf("\nLa esquina 2 esta en la posicion: %i", getCornerPosition(2));
+    printf("\nLa esquina 3 esta en la posicion: %i", getCornerPosition(3));
+    printf("\nLa esquina 4 esta en la posicion: %i", getCornerPosition(4));
 
     //Printing
 
@@ -132,7 +135,7 @@ void PLL()
 {
     //El cubo entra con la cara superior ya resuelta pero con esquinas y aristas desorientados
 
-    //Mientras el cubo NO estÈ resuelto
+    //Mientras el cubo NO est√© resuelto
     while (isCubeDone() == 0)
     {
         //Buscar coincidencias de color en esquinas
@@ -140,10 +143,10 @@ void PLL()
         {
             //Si TODAS las esquinas coinciden, U1, U2, Z, H
 
-            //El IF verifica Si hay una lÌnea completa, U1, U2.
+            //El IF verifica Si hay una l√≠nea completa, U1, U2.
             if(PLLCHECK() > 0)
             {
-                //El switch determina en quÈ cara se encuentra la lÌnea de U1 o U2 y la orienta a la cara frontal
+                //El switch determina en qu√© cara se encuentra la l√≠nea de U1 o U2 y la orienta a la cara frontal
                 switch(PLLCHECK())
                 {
                 case 2:
@@ -169,7 +172,7 @@ void PLL()
                     return;
                 }
 
-                //En este punto sÛlo debe decidirse si es U1 o U2
+                //En este punto s√≥lo debe decidirse si es U1 o U2
                 if (isOpposite(front[0][1],right[0][1]) == 1)
                     PLLU1();
 
@@ -178,14 +181,14 @@ void PLL()
 
             }
 
-            //Si no hay una lÌnea completa, solo puede ser Z o H
+            //Si no hay una l√≠nea completa, solo puede ser Z o H
             else
             {
                 //H
                 if(front[0][0] == back[0][1])
                 {
                     PLLH();
-                    //Girar U hasta que el cubo estÈ resuelto
+                    //Girar U hasta que el cubo est√© resuelto
                     while (isCubeDone() == 0)
                     {
                         U();
@@ -207,7 +210,7 @@ void PLL()
 
         else if (front[0][0] == front[0][2] || right[0][0] == right[0][2] || back[0][0] == back[0][2] || left[0][0] == left[0][2])
         {
-            //Por lo menos hay UNA coincidencia. Determinar en quÈ cara se encuentra la coincidencia
+            //Por lo menos hay UNA coincidencia. Determinar en qu√© cara se encuentra la coincidencia
             if (front[0][0] == front[0][2])
             {
                 PLLSKIP();
@@ -251,13 +254,13 @@ void OLL()
     while (isCrossDone() == 0)
     {
         //No. Entonces:
-        //øQuÈ figura tengo?
+        //¬øQu√© figura tengo?
         //Orientar figura
         //Hacer cruz
 
         if (isLine() == 1)
         {
-            //Girar U hasta orientar la lÌnea en horizontal
+            //Girar U hasta orientar la l√≠nea en horizontal
             while (up[0][1] == up[1][1])
             {
                 U();
@@ -281,12 +284,12 @@ void OLL()
     int color = up[1][1];
     while (isLastLayerDone() == 0)
     {
-        //Se parte del hecho de que la cruz ya est· hecha, por lo tanto, (0,1)(1,0)(1,2)(2,1) ya estan cubiertos
+        //Se parte del hecho de que la cruz ya est√° hecha, por lo tanto, (0,1)(1,0)(1,2)(2,1) ya estan cubiertos
         //con el color central, solo se necesitan verificar esquinas restantes
 
         if (front[0][0] == color && front[0][2] == color && back[0][0] == color && back[0][2] == color)
         {
-            OLLA1(); //Cruz f·cil
+            OLLA1(); //Cruz f√°cil
         }
         else if (front[0][2] == color && back[0][0] == color && left[0][0] == color && left[0][2] == color)
         {
@@ -313,7 +316,7 @@ void OLL()
             OLLA7();
         }
         else
-            //Si ning˙n caso est· orientado, girar U
+            //Si ning√∫n caso est√° orientado, girar U
             U();
     }
     //Orientar cruz
@@ -387,7 +390,7 @@ void R()
     {
         aux[i] = right[0][i];
         aux2[i] = right[i][2];
-        aux3[i] = right[2][i]; ////Guarda la informaciÛn de la cara afectada para girarla sobre su propio eje
+        aux3[i] = right[2][i]; ////Guarda la informaci√≥n de la cara afectada para girarla sobre su propio eje
         aux4[i] = right[i][0];
     }
 
@@ -1024,8 +1027,8 @@ int isOpposite(int a, int b)
 
 int isCubeDone()
 {
-    //Regresa 1 si el cubo est· hecho
-    //Se empieza suponiendo que el cubo SÕ est· hecho
+    //Regresa 1 si el cubo est√° hecho
+    //Se empieza suponiendo que el cubo S√ç est√° hecho
     int val = 1;
 
     //Guarda los colores de los centros para comparar con el resto del cubo
@@ -1080,7 +1083,7 @@ void OLLL()
 {
     F(); U(); R(); UP(); RP(); FP();
 }
-void OLLA1() //Cruz f·cil
+void OLLA1() //Cruz f√°cil
 {
     R(); U(); U(); RP(); UP();
     R(); U(); RP(); UP();
@@ -1109,7 +1112,7 @@ void OLLA6() //Nave 2
     L(); F(); RP(); FP();
     LP(); F(); R(); FP();
 }
-void OLLA7() //MoÒo
+void OLLA7() //Mo√±o
 {
     RP(); FP(); LP(); F(); R(); FP(); L(); F();
 }
@@ -1145,7 +1148,7 @@ int isL() //Regresa 1 si hay una L (antes de la cruz)
     free(color);
     return val;
 }
-int isDot() //Regresa 1 si sÛlo hay un punto (antes de la cruz)
+int isDot() //Regresa 1 si s√≥lo hay un punto (antes de la cruz)
 {
     int val = 0;
 
@@ -1159,7 +1162,7 @@ int isDot() //Regresa 1 si sÛlo hay un punto (antes de la cruz)
     free(color);
     return val;
 }
-int isLine() //Regresa 1 si hay una lÌnea (antes de cruz)
+int isLine() //Regresa 1 si hay una l√≠nea (antes de cruz)
 {
     int val = 0;
 
@@ -1175,7 +1178,7 @@ int isLine() //Regresa 1 si hay una lÌnea (antes de cruz)
 }
 int isLastLayerDone()
 {
-    //Se empieza suponiendo que la cara est· hecha
+    //Se empieza suponiendo que la cara est√° hecha
     int val = 1;
 
     int *color = malloc(sizeof(int));
@@ -1201,7 +1204,7 @@ int isLastLayerDone()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////                                              Algoritmos de F2L                                 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-int getCornerPosition(int corner) //Devuelve el n˙mero en donde se encuentra la esquina actual
+int getCornerPosition(int corner) //Devuelve el n√∫mero en donde se encuentra la esquina actual
 {
     //Valor a devolver
     int position = 0;
@@ -1225,13 +1228,13 @@ int getCornerPosition(int corner) //Devuelve el n˙mero en donde se encuentra la 
     switch (corner)
     {
         case 1:
-            //Empezar inspecciÛn del cubo para esquina EDFL
+            //Empezar inspecci√≥n del cubo para esquina EDFL
 
-            //Si la esquina est· en la cara de abajo
+            //Si la esquina est√° en la cara de abajo
             if (down[0][0] == *downColor)
             {
-                //Los valores complementarios, aquÌ, son, front[2,0] y left[2,2]
-                if (front[2][0] == *frontColor && left[2][2] == *leftColor)
+                //Los valores complementarios son front[2,0] y left[2,2]
+                if (left[2][2] == *leftColor && front[2][0] == *frontColor)
                 {
                     position = 1;
                     break;
@@ -1249,7 +1252,7 @@ int getCornerPosition(int corner) //Devuelve el n˙mero en donde se encuentra la 
             if (down[2][0] == *downColor)
             {
                 //Los valores complementarios son left[2,0] y back[2,2]
-                if (left[2][0] == *frontColor && back[2][2] == *leftColor)
+                if (back[2][2] == *leftColor && left[2][0] == *frontColor)
                 {
                     position = 7;
                     break;
@@ -1265,8 +1268,8 @@ int getCornerPosition(int corner) //Devuelve el n˙mero en donde se encuentra la 
                 }
             }
 
-            //Si la esquina est· en la cara frontal
-            if (front[0][0] == *frontColor)
+            //Si la esquina est√° en la cara frontal
+            if (front[0][0] == *downColor)
             {
                 //Los valores complementarios son left[0][2] y up[2][0]
                 if (left[0][2] == *leftColor && up[2][0] == *frontColor)
@@ -1275,44 +1278,878 @@ int getCornerPosition(int corner) //Devuelve el n˙mero en donde se encuentra la 
                     break;
                 }
             }
-            if (front[0][2] == *frontColor)
-            if (front[2][0] == *frontColor)
-            if (front[2][2] == *frontColor)
+            if (front[0][2] == *downColor)
+            {
+                //Los valores complementarios son right[0][0] y up[2][2]
+                if (up[2][2] == *leftColor && right[0][0] == *frontColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
+            if (front[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[0][0] y left[2][2]
+                if (down[0][0] == *leftColor && left[2][2] == *frontColor)
+                {
+                    position = 1;
+                    break;
+                }
+            }
+            if (front[2][2] == *downColor)
+            {
+                //Los valores complementarios son down[0][2] y right[2][0]
+                if (right[2][0] == *leftColor && down[0][2] == *frontColor)
+                {
+                    position = 3;
+                    break;
+                }
+            }
 
-            //Si la esquina est· en la cara derecha
-            if (right[0][0] == *rightColor)
-            if (right[0][2] == *rightColor)
-            if (right[2][0] == *rightColor)
-            if (right[2][2] == *rightColor)
+            //Si la esquina est√° en la cara derecha
+            if (right[0][0] == *downColor)
+            {
+                //Los valores complementarios son front[0][2] y up[2][2]
+                if (front[0][2] == *leftColor && up[2][2] == *frontColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
+            if (right[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[0][2] y back[0][0]
+                if (up[0][2] == *leftColor && back[0][0] == *frontColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (right[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[0][2] y front[2][2]
+                if (down[0][2] == *leftColor && front[2][2] == *frontColor)
+                {
+                    position = 3;
+                    break;
+                }
+            }
+            if (right[2][2] == *downColor)
+            {
+                //Los valores complementarios son down[2][2] y back[2][0]
+                if (back[2][0] == *leftColor && down[2][2] == *frontColor)
+                {
+                    position = 5;
+                    break;
+                }
+            }
 
-            //Si la esquina est· en la cara trasera
-            if (back[0][0] == *backColor)
-            if (back[0][2] == *backColor)
-            if (back[2][0] == *backColor)
-            if (back[2][2] == *backColor)
+            //Si la esquina est√° en la cara trasera
+            if (back[0][0] == *downColor)
+            {
+                //Los valores complementarios son right[0][2] y up[0][2]
+                if (right[0][2] == *leftColor && up[0][2] == *frontColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (back[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[0][0] y left[0][0]
+                if (up[0][0] == *leftColor && left[0][0] == *frontColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (back[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[2][2] y right[2][2]
+                if (down[2][2] == *leftColor && right[2][2] == *frontColor)
+                {
+                    position = 5;
+                    break;
+                }
+            }
+            if (back[2][2] == *downColor)
+            {
+                //Los valores complementarios son left[2][0] y down[2][0]
+                if (left[2][0] == *leftColor && down[2][0] == *frontColor)
+                {
+                    position = 7;
+                    break;
+                }
+            }
 
-            //Si la esquina est· en la cara izquierda
-            if (left[0][0] == *leftColor)
-            if (left[0][2] == *leftColor)
-            if (left[2][0] == *leftColor)
-            if (left[2][2] == *leftColor)
+            //Si la esquina est√° en la cara izquierda
+            if (left[0][0] == *downColor)
+            {
+                //Los valores complementarios son back[0][2] y up[0][0]
+                if (back[0][2] == *leftColor && up[0][0] == *frontColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (left[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[2][0] y front[0][0]
+                if (up[2][0] == *leftColor && front[0][0] == *frontColor)
+                {
+                    position = 13;
+                    break;
+                }
+            }
+            if (left[2][0] == *downColor)
+            {
+                //Los valores complementarios down[2][0] y back[2][2]
+                if (down[2][0] == *leftColor && back[2][2] == *frontColor)
+                {
+                    position = 7;
+                    break;
+                }
+            }
+            if (left[2][2] == *downColor)
+            {
+                //Los valores complementarios front[2][0] y down[0][0]
+                if (front[2][0] == *leftColor && down[0][0] == *frontColor)
+                {
+                    position = 1;
+                    break;
+                }
+            }
 
-            //Si la esquina est· en la cara de arriba
-            if (up[0][0] == *upColor)
-            if (up[0][0] == *upColor)
-            if (up[0][0] == *upColor)
-            if (up[0][0] == *upColor)
-
-            break;
+            //Si la esquina est√° en la cara de arriba
+            if (up[0][0] == *downColor)
+            {
+                //Los valores complementarios left[0][0] y back[0][2]
+                if (left[0][0] == *leftColor && back[0][2] == *frontColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (up[0][2] == *downColor)
+            {
+                //Los valores complementarios back[0][0] y right[0][2]
+                if (back[0][0] == *leftColor && right[0][2] == *frontColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (up[2][0] == *downColor)
+            {
+                //Los valores complementarios front[0][0] y left[0][2]
+                if (front[0][0] == *leftColor && left[0][2] == *frontColor)
+                {
+                    position = 13;
+                    break;
+                }
+            }
+            if (up[2][2] == *downColor)
+            {
+                //Los valores complementarios son right[0][0] y front[0][2]
+                if (right[0][0] == *leftColor && front[0][2] == *frontColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
 
         case 2:
-            break;
+            //Empezar inspecci√≥n del cubo para esquina EDFR
+
+            //Si la esquina est√° en la cara de abajo
+            if (down[0][0] == *downColor)
+            {
+                //Los valores complementarios son front[2,0] y left[2,2]
+                if (left[2][2] == *frontColor && front[2][0] == *rightColor)
+                {
+                    position = 1;
+                    break;
+                }
+            }
+            if (down[0][2] == *downColor)
+            {
+                //Los valores complementarios son front[2,2] y right[2,0]
+                if (front[2][2] == *frontColor && right[2][0] == *rightColor)
+                {
+                    position = 3;
+                    break;
+                }
+            }
+            if (down[2][0] == *downColor)
+            {
+                //Los valores complementarios son left[2,0] y back[2,2]
+                if (back[2][2] == *frontColor && left[2][0] == *rightColor)
+                {
+                    position = 7;
+                    break;
+                }
+            }
+            if (down[2][2] == *downColor)
+            {
+                //Los valores complementarios son right[2,2] y back[2,0]
+                if (right[2][2] == *frontColor && back[2][0] == *rightColor)
+                {
+                    position = 5;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara frontal
+            if (front[0][0] == *downColor)
+            {
+                //Los valores complementarios son left[0][2] y up[2][0]
+                if (left[0][2] == *frontColor && up[2][0] == *rightColor)
+                {
+                    position = 13;
+                    break;
+                }
+            }
+            if (front[0][2] == *downColor)
+            {
+                //Los valores complementarios son right[0][0] y up[2][2]
+                if (up[2][2] == *frontColor && right[0][0] == *rightColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
+            if (front[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[0][0] y left[2][2]
+                if (down[0][0] == *frontColor && left[2][2] == *rightColor)
+                {
+                    position = 1;
+                    break;
+                }
+            }
+            if (front[2][2] == *downColor)
+            {
+                //Los valores complementarios son down[0][2] y right[2][0]
+                if (right[2][0] == *frontColor && down[0][2] == *rightColor)
+                {
+                    position = 3;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara derecha
+            if (right[0][0] == *downColor)
+            {
+                //Los valores complementarios son front[0][2] y up[2][2]
+                if (front[0][2] == *frontColor && up[2][2] == *rightColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
+            if (right[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[0][2] y back[0][0]
+                if (up[0][2] == *frontColor && back[0][0] == *rightColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (right[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[0][2] y front[2][2]
+                if (down[0][2] == *frontColor && front[2][2] == *rightColor)
+                {
+                    position = 3;
+                    break;
+                }
+            }
+            if (right[2][2] == *downColor)
+            {
+                //Los valores complementarios son down[2][2] y back[2][0]
+                if (back[2][0] == *frontColor && down[2][2] == *rightColor)
+                {
+                    position = 5;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara trasera
+            if (back[0][0] == *downColor)
+            {
+                //Los valores complementarios son right[0][2] y up[0][2]
+                if (right[0][2] == *frontColor && up[0][2] == *rightColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (back[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[0][0] y left[0][0]
+                if (up[0][0] == *frontColor && left[0][0] == *rightColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (back[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[2][2] y right[2][2]
+                if (down[2][2] == *frontColor && right[2][2] == *rightColor)
+                {
+                    position = 5;
+                    break;
+                }
+            }
+            if (back[2][2] == *downColor)
+            {
+                //Los valores complementarios son left[2][0] y down[2][0]
+                if (left[2][0] == *frontColor && down[2][0] == *rightColor)
+                {
+                    position = 7;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara izquierda
+            if (left[0][0] == *downColor)
+            {
+                //Los valores complementarios son back[0][2] y up[0][0]
+                if (back[0][2] == *frontColor && up[0][0] == *rightColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (left[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[2][0] y front[0][0]
+                if (up[2][0] == *frontColor && front[0][0] == *rightColor)
+                {
+                    position = 13;
+                    break;
+                }
+            }
+            if (left[2][0] == *downColor)
+            {
+                //Los valores complementarios down[2][0] y back[2][2]
+                if (down[2][0] == *frontColor && back[2][2] == *rightColor)
+                {
+                    position = 7;
+                    break;
+                }
+            }
+            if (left[2][2] == *downColor)
+            {
+                //Los valores complementarios front[2][0] y down[0][0]
+                if (front[2][0] == *frontColor && down[0][0] == *rightColor)
+                {
+                    position = 1;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara de arriba
+            if (up[0][0] == *downColor)
+            {
+                //Los valores complementarios left[0][0] y back[0][2]
+                if (left[0][0] == *frontColor && back[0][2] == *rightColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (up[0][2] == *downColor)
+            {
+                //Los valores complementarios back[0][0] y right[0][2]
+                if (back[0][0] == *frontColor && right[0][2] == *rightColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (up[2][0] == *downColor)
+            {
+                //Los valores complementarios front[0][0] y left[0][2]
+                if (front[0][0] == *frontColor && left[0][2] == *rightColor)
+                {
+                    position = 13;
+                    break;
+                }
+            }
+            if (up[2][2] == *downColor)
+            {
+                //Los valores complementarios son right[0][0] y front[0][2]
+                if (right[0][0] == *frontColor && front[0][2] == *rightColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
 
         case 3:
-            break;
+            //Empezar inspecci√≥n del cubo para esquina EDRB
+
+            //Si la esquina est√° en la cara de abajo
+            if (down[0][0] == *downColor)
+            {
+                //Los valores complementarios son front[2,0] y left[2,2]
+                if (left[2][2] == *rightColor && front[2][0] == *backColor)
+                {
+                    position = 1;
+                    break;
+                }
+            }
+            if (down[0][2] == *downColor)
+            {
+                //Los valores complementarios son front[2,2] y right[2,0]
+                if (front[2][2] == *rightColor && right[2][0] == *backColor)
+                {
+                    position = 3;
+                    break;
+                }
+            }
+            if (down[2][0] == *downColor)
+            {
+                //Los valores complementarios son left[2,0] y back[2,2]
+                if (back[2][2] == *rightColor && left[2][0] == *backColor)
+                {
+                    position = 7;
+                    break;
+                }
+            }
+            if (down[2][2] == *downColor)
+            {
+                //Los valores complementarios son right[2,2] y back[2,0]
+                if (right[2][2] == *rightColor && back[2][0] == *backColor)
+                {
+                    position = 5;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara frontal
+            if (front[0][0] == *downColor)
+            {
+                //Los valores complementarios son left[0][2] y up[2][0]
+                if (left[0][2] == *rightColor && up[2][0] == *backColor)
+                {
+                    position = 13;
+                    break;
+                }
+            }
+            if (front[0][2] == *downColor)
+            {
+                //Los valores complementarios son right[0][0] y up[2][2]
+                if (up[2][2] == *rightColor && right[0][0] == *backColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
+            if (front[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[0][0] y left[2][2]
+                if (down[0][0] == *rightColor && left[2][2] == *backColor)
+                {
+                    position = 1;
+                    break;
+                }
+            }
+            if (front[2][2] == *downColor)
+            {
+                //Los valores complementarios son down[0][2] y right[2][0]
+                if (right[2][0] == *rightColor && down[0][2] == *backColor)
+                {
+                    position = 3;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara derecha
+            if (right[0][0] == *downColor)
+            {
+                //Los valores complementarios son front[0][2] y up[2][2]
+                if (front[0][2] == *rightColor && up[2][2] == *backColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
+            if (right[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[0][2] y back[0][0]
+                if (up[0][2] == *rightColor && back[0][0] == *backColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (right[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[0][2] y front[2][2]
+                if (down[0][2] == *rightColor && front[2][2] == *backColor)
+                {
+                    position = 3;
+                    break;
+                }
+            }
+            if (right[2][2] == *downColor)
+            {
+                //Los valores complementarios son down[2][2] y back[2][0]
+                if (back[2][0] == *rightColor && down[2][2] == *backColor)
+                {
+                    position = 5;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara trasera
+            if (back[0][0] == *downColor)
+            {
+                //Los valores complementarios son right[0][2] y up[0][2]
+                if (right[0][2] == *rightColor && up[0][2] == *backColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (back[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[0][0] y left[0][0]
+                if (up[0][0] == *rightColor && left[0][0] == *backColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (back[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[2][2] y right[2][2]
+                if (down[2][2] == *rightColor && right[2][2] == *backColor)
+                {
+                    position = 5;
+                    break;
+                }
+            }
+            if (back[2][2] == *downColor)
+            {
+                //Los valores complementarios son left[2][0] y down[2][0]
+                if (left[2][0] == *rightColor && down[2][0] == *backColor)
+                {
+                    position = 7;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara izquierda
+            if (left[0][0] == *downColor)
+            {
+                //Los valores complementarios son back[0][2] y up[0][0]
+                if (back[0][2] == *rightColor && up[0][0] == *backColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (left[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[2][0] y front[0][0]
+                if (up[2][0] == *rightColor && front[0][0] == *backColor)
+                {
+                    position = 13;
+                    break;
+                }
+            }
+            if (left[2][0] == *downColor)
+            {
+                //Los valores complementarios down[2][0] y back[2][2]
+                if (down[2][0] == *rightColor && back[2][2] == *backColor)
+                {
+                    position = 7;
+                    break;
+                }
+            }
+            if (left[2][2] == *downColor)
+            {
+                //Los valores complementarios front[2][0] y down[0][0]
+                if (front[2][0] == *rightColor && down[0][0] == *backColor)
+                {
+                    position = 1;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara de arriba
+            if (up[0][0] == *downColor)
+            {
+                //Los valores complementarios left[0][0] y back[0][2]
+                if (left[0][0] == *rightColor && back[0][2] == *backColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (up[0][2] == *downColor)
+            {
+                //Los valores complementarios back[0][0] y right[0][2]
+                if (back[0][0] == *rightColor && right[0][2] == *backColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (up[2][0] == *downColor)
+            {
+                //Los valores complementarios front[0][0] y left[0][2]
+                if (front[0][0] == *rightColor && left[0][2] == *backColor)
+                {
+                    position = 13;
+                    break;
+                }
+            }
+            if (up[2][2] == *downColor)
+            {
+                //Los valores complementarios son right[0][0] y front[0][2]
+                if (right[0][0] == *rightColor && front[0][2] == *backColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
 
         case 4:
-            break;
+            //Empezar inspecci√≥n del cubo para esquina EDBL
+
+            //Si la esquina est√° en la cara de abajo
+            if (down[0][0] == *downColor)
+            {
+                //Los valores complementarios son front[2,0] y left[2,2]
+                if (left[2][2] == *backColor && front[2][0] == *leftColor)
+                {
+                    position = 1;
+                    break;
+                }
+            }
+            if (down[0][2] == *downColor)
+            {
+                //Los valores complementarios son front[2,2] y right[2,0]
+                if (front[2][2] == *backColor && right[2][0] == *leftColor)
+                {
+                    position = 3;
+                    break;
+                }
+            }
+            if (down[2][0] == *downColor)
+            {
+                //Los valores complementarios son left[2,0] y back[2,2]
+                if (back[2][2] == *backColor && left[2][0] == *leftColor)
+                {
+                    position = 7;
+                    break;
+                }
+            }
+            if (down[2][2] == *downColor)
+            {
+                //Los valores complementarios son right[2,2] y back[2,0]
+                if (right[2][2] == *backColor && back[2][0] == *leftColor)
+                {
+                    position = 5;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara frontal
+            if (front[0][0] == *downColor)
+            {
+                //Los valores complementarios son left[0][2] y up[2][0]
+                if (left[0][2] == *backColor && up[2][0] == *leftColor)
+                {
+                    position = 13;
+                    break;
+                }
+            }
+            if (front[0][2] == *downColor)
+            {
+                //Los valores complementarios son right[0][0] y up[2][2]
+                if (up[2][2] == *backColor && right[0][0] == *leftColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
+            if (front[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[0][0] y left[2][2]
+                if (down[0][0] == *backColor && left[2][2] == *leftColor)
+                {
+                    position = 1;
+                    break;
+                }
+            }
+            if (front[2][2] == *downColor)
+            {
+                //Los valores complementarios son down[0][2] y right[2][0]
+                if (right[2][0] == *backColor && down[0][2] == *leftColor)
+                {
+                    position = 3;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara derecha
+            if (right[0][0] == *downColor)
+            {
+                //Los valores complementarios son front[0][2] y up[2][2]
+                if (front[0][2] == *backColor && up[2][2] == *leftColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
+            if (right[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[0][2] y back[0][0]
+                if (up[0][2] == *backColor && back[0][0] == *leftColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (right[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[0][2] y front[2][2]
+                if (down[0][2] == *backColor && front[2][2] == *leftColor)
+                {
+                    position = 3;
+                    break;
+                }
+            }
+            if (right[2][2] == *downColor)
+            {
+                //Los valores complementarios son down[2][2] y back[2][0]
+                if (back[2][0] == *backColor && down[2][2] == *leftColor)
+                {
+                    position = 5;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara trasera
+            if (back[0][0] == *downColor)
+            {
+                //Los valores complementarios son right[0][2] y up[0][2]
+                if (right[0][2] == *backColor && up[0][2] == *leftColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (back[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[0][0] y left[0][0]
+                if (up[0][0] == *backColor && left[0][0] == *leftColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (back[2][0] == *downColor)
+            {
+                //Los valores complementarios son down[2][2] y right[2][2]
+                if (down[2][2] == *backColor && right[2][2] == *leftColor)
+                {
+                    position = 5;
+                    break;
+                }
+            }
+            if (back[2][2] == *downColor)
+            {
+                //Los valores complementarios son left[2][0] y down[2][0]
+                if (left[2][0] == *backColor && down[2][0] == *leftColor)
+                {
+                    position = 7;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara izquierda
+            if (left[0][0] == *downColor)
+            {
+                //Los valores complementarios son back[0][2] y up[0][0]
+                if (back[0][2] == *backColor && up[0][0] == *leftColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (left[0][2] == *downColor)
+            {
+                //Los valores complementarios son up[2][0] y front[0][0]
+                if (up[2][0] == *backColor && front[0][0] == *leftColor)
+                {
+                    position = 13;
+                    break;
+                }
+            }
+            if (left[2][0] == *downColor)
+            {
+                //Los valores complementarios down[2][0] y back[2][2]
+                if (down[2][0] == *backColor && back[2][2] == *leftColor)
+                {
+                    position = 7;
+                    break;
+                }
+            }
+            if (left[2][2] == *downColor)
+            {
+                //Los valores complementarios front[2][0] y down[0][0]
+                if (front[2][0] == *backColor && down[0][0] == *leftColor)
+                {
+                    position = 1;
+                    break;
+                }
+            }
+
+            //Si la esquina est√° en la cara de arriba
+            if (up[0][0] == *downColor)
+            {
+                //Los valores complementarios left[0][0] y back[0][2]
+                if (left[0][0] == *backColor && back[0][2] == *leftColor)
+                {
+                    position = 19;
+                    break;
+                }
+            }
+            if (up[0][2] == *downColor)
+            {
+                //Los valores complementarios back[0][0] y right[0][2]
+                if (back[0][0] == *backColor && right[0][2] == *leftColor)
+                {
+                    position = 17;
+                    break;
+                }
+            }
+            if (up[2][0] == *downColor)
+            {
+                //Los valores complementarios front[0][0] y left[0][2]
+                if (front[0][0] == *backColor && left[0][2] == *leftColor)
+                {
+                    position = 13;
+                    break;
+                }
+            }
+            if (up[2][2] == *downColor)
+            {
+                //Los valores complementarios son right[0][0] y front[0][2]
+                if (right[0][0] == *backColor && front[0][2] == *leftColor)
+                {
+                    position = 15;
+                    break;
+                }
+            }
     }
 
     //Liberar memoria
@@ -1323,17 +2160,6 @@ int getCornerPosition(int corner) //Devuelve el n˙mero en donde se encuentra la 
     free(upColor);
     free(downColor);
 
-    //Regresar posiciÛn
+    //Regresar posici√≥n
     return position;
 }
-
-
-
-
-
-
-
-
-
-
-
