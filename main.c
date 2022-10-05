@@ -1,15 +1,15 @@
 //Algoritmo a imitar: Fridrich Reducido
 /*
-    Nombre: César Soltero Pérez
+    Nombre: Cï¿½sar Soltero Pï¿½rez
     Fecha: 28/09/2022
 
     Update: 4/10/2022
 
     Cambios a hacer:
-    -Función F no es compatible con Arduino, cambiar cuando se exporta
-    -PrintFace NO será exportada a Arduino, sólo es una función auxiliar
-    -Validad colores (9 colores máximo de cada uno)
-    -Función para cancelar escaner
+    -Funciï¿½n F no es compatible con Arduino, cambiar cuando se exporta
+    -PrintFace NO serï¿½ exportada a Arduino, sï¿½lo es una funciï¿½n auxiliar
+    -Validad colores (9 colores mï¿½ximo de cada uno)
+    -Funciï¿½n para cancelar escaner
 
     Objetivos:
     -int getEdgePosition(int arista);
@@ -57,30 +57,30 @@ void PLLU2(); //Aristas horario
 void PLLZ(); //Aristas adyacentes
 void PLLH(); //Aristas opuestas (en cruz)
 void PLLSKIP(); //Reduce PLL a 4 algoritmmos
-int PLLCHECK(); //Revisa la primera fila por igualdad, regresa 0 si no hay igualdad, regresa 1-6 según el numero de cara
+int PLLCHECK(); //Revisa la primera fila por igualdad, regresa 0 si no hay igualdad, regresa 1-6 segï¿½n el numero de cara
 int isOpposite(int a, int b); //Determina si dos colores son opuestos, regresa 0 si FALSO, 1 si VERDADERO
-int isCubeDone(); //Inspecciona el cubo, dice si está terminado
+int isCubeDone(); //Inspecciona el cubo, dice si estï¿½ terminado
 
 //OLL
 void OLLDOT(); //Algoritmo para convertir el punto en cruz
 void OLLLINE(); //Algoritmo para convertir la linea en cruz
 void OLLL(); //Algoritmo para convertir la L en cruz
-void OLLA1(); //Cruz fácil
+void OLLA1(); //Cruz fï¿½cil
 void OLLA2(); //Cruz (nave)
 void OLLA3(); //Pez 1
 void OLLA4(); //Pez 2
 void OLLA5(); //Nave
 void OLLA6(); //Nave 2
-void OLLA7(); //Moño
+void OLLA7(); //Moï¿½o
 int isCrossDone(); //Inspecciona la cara superior y regresa 0 si NO hay cruz, regresa 1 si la hay
 int isL(); //Regresa 1 si hay una L (antes de la cruz)
-int isDot(); //Regresa 1 si sólo hay un punto (antes de la cruz)
-int isLine(); //Regresa 1 si hay una línea (antes de cruz)
+int isDot(); //Regresa 1 si sï¿½lo hay un punto (antes de la cruz)
+int isLine(); //Regresa 1 si hay una lï¿½nea (antes de cruz)
 int isLastLayerDone(); //Regresa 1 si la cara superior ya se ha resuelto
 
 //F2L
-int getCornerPosition(int corner); //Duelve la posición (1-20) de la esquina down[][] que se quiere acomodar
-int getEdgePosition(int arista); //Duelve la posición (1-20) de la arista que se quiere encontrar
+int getCornerPosition(int corner); //Duelve la posiciï¿½n (1-20) de la esquina down[][] que se quiere acomodar
+int getEdgePosition(int arista); //Duelve la posiciï¿½n (1-20) de la arista que se quiere encontrar
 void setBlock1(); //Orienta bloque 1 (esquina y arista)
 void setBlock2(); //Orienta bloque 2 (esquina y arista)
 void setBlock1(); //Orienta bloque 3 (esquina y arista)
@@ -111,10 +111,7 @@ int main()
     scanFace(up);
 
     //Solving phase
-    printf("La arista 1 esta en la posicion: %i", getEdgePosition(1));
-    printf("\nLa arista 2 esta en la posicion: %i", getEdgePosition(2));
-    printf("\nLa arista 3 esta en la posicion: %i", getEdgePosition(3));
-    printf("\nLa arista 4 esta en la posicion: %i", getEdgePosition(4));
+    setBlock1();
 
     //Printing
 
@@ -140,7 +137,7 @@ void PLL()
 {
     //El cubo entra con la cara superior ya resuelta pero con esquinas y aristas desorientados
 
-    //Mientras el cubo NO esté resuelto
+    //Mientras el cubo NO estï¿½ resuelto
     while (isCubeDone() == 0)
     {
         //Buscar coincidencias de color en esquinas
@@ -148,10 +145,10 @@ void PLL()
         {
             //Si TODAS las esquinas coinciden, U1, U2, Z, H
 
-            //El IF verifica Si hay una línea completa, U1, U2.
+            //El IF verifica Si hay una lï¿½nea completa, U1, U2.
             if(PLLCHECK() > 0)
             {
-                //El switch determina en qué cara se encuentra la línea de U1 o U2 y la orienta a la cara frontal
+                //El switch determina en quï¿½ cara se encuentra la lï¿½nea de U1 o U2 y la orienta a la cara frontal
                 switch(PLLCHECK())
                 {
                 case 2:
@@ -177,7 +174,7 @@ void PLL()
                     return;
                 }
 
-                //En este punto sólo debe decidirse si es U1 o U2
+                //En este punto sï¿½lo debe decidirse si es U1 o U2
                 if (isOpposite(front[0][1],right[0][1]) == 1)
                     PLLU1();
 
@@ -186,14 +183,14 @@ void PLL()
 
             }
 
-            //Si no hay una línea completa, solo puede ser Z o H
+            //Si no hay una lï¿½nea completa, solo puede ser Z o H
             else
             {
                 //H
                 if(front[0][0] == back[0][1])
                 {
                     PLLH();
-                    //Girar U hasta que el cubo esté resuelto
+                    //Girar U hasta que el cubo estï¿½ resuelto
                     while (isCubeDone() == 0)
                     {
                         U();
@@ -215,7 +212,7 @@ void PLL()
 
         else if (front[0][0] == front[0][2] || right[0][0] == right[0][2] || back[0][0] == back[0][2] || left[0][0] == left[0][2])
         {
-            //Por lo menos hay UNA coincidencia. Determinar en qué cara se encuentra la coincidencia
+            //Por lo menos hay UNA coincidencia. Determinar en quï¿½ cara se encuentra la coincidencia
             if (front[0][0] == front[0][2])
             {
                 PLLSKIP();
@@ -259,13 +256,13 @@ void OLL()
     while (isCrossDone() == 0)
     {
         //No. Entonces:
-        //¿Qué figura tengo?
+        //ï¿½Quï¿½ figura tengo?
         //Orientar figura
         //Hacer cruz
 
         if (isLine() == 1)
         {
-            //Girar U hasta orientar la línea en horizontal
+            //Girar U hasta orientar la lï¿½nea en horizontal
             while (up[0][1] == up[1][1])
             {
                 U();
@@ -289,12 +286,12 @@ void OLL()
     int color = up[1][1];
     while (isLastLayerDone() == 0)
     {
-        //Se parte del hecho de que la cruz ya está hecha, por lo tanto, (0,1)(1,0)(1,2)(2,1) ya estan cubiertos
+        //Se parte del hecho de que la cruz ya estï¿½ hecha, por lo tanto, (0,1)(1,0)(1,2)(2,1) ya estan cubiertos
         //con el color central, solo se necesitan verificar esquinas restantes
 
         if (front[0][0] == color && front[0][2] == color && back[0][0] == color && back[0][2] == color)
         {
-            OLLA1(); //Cruz fácil
+            OLLA1(); //Cruz fï¿½cil
         }
         else if (front[0][2] == color && back[0][0] == color && left[0][0] == color && left[0][2] == color)
         {
@@ -321,7 +318,7 @@ void OLL()
             OLLA7();
         }
         else
-            //Si ningún caso está orientado, girar U
+            //Si ningï¿½n caso estï¿½ orientado, girar U
             U();
     }
     //Orientar cruz
@@ -331,7 +328,7 @@ void OLL()
 //F2L
 void F2L()
 {
-    //Mientras F2L No esté resuelto (while), hacer F2L
+    //Mientras F2L No estï¿½ resuelto (while), hacer F2L
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////                                              Funciones auxiliares                                ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -395,7 +392,7 @@ void R()
     {
         aux[i] = right[0][i];
         aux2[i] = right[i][2];
-        aux3[i] = right[2][i]; ////Guarda la información de la cara afectada para girarla sobre su propio eje
+        aux3[i] = right[2][i]; ////Guarda la informaciï¿½n de la cara afectada para girarla sobre su propio eje
         aux4[i] = right[i][0];
     }
 
@@ -1032,8 +1029,8 @@ int isOpposite(int a, int b)
 
 int isCubeDone()
 {
-    //Regresa 1 si el cubo está hecho
-    //Se empieza suponiendo que el cubo SÍ está hecho
+    //Regresa 1 si el cubo estï¿½ hecho
+    //Se empieza suponiendo que el cubo Sï¿½ estï¿½ hecho
     int val = 1;
 
     //Guarda los colores de los centros para comparar con el resto del cubo
@@ -1088,7 +1085,7 @@ void OLLL()
 {
     F(); U(); R(); UP(); RP(); FP();
 }
-void OLLA1() //Cruz fácil
+void OLLA1() //Cruz fï¿½cil
 {
     R(); U(); U(); RP(); UP();
     R(); U(); RP(); UP();
@@ -1117,7 +1114,7 @@ void OLLA6() //Nave 2
     L(); F(); RP(); FP();
     LP(); F(); R(); FP();
 }
-void OLLA7() //Moño
+void OLLA7() //Moï¿½o
 {
     RP(); FP(); LP(); F(); R(); FP(); L(); F();
 }
@@ -1153,7 +1150,7 @@ int isL() //Regresa 1 si hay una L (antes de la cruz)
     free(color);
     return val;
 }
-int isDot() //Regresa 1 si sólo hay un punto (antes de la cruz)
+int isDot() //Regresa 1 si sï¿½lo hay un punto (antes de la cruz)
 {
     int val = 0;
 
@@ -1167,7 +1164,7 @@ int isDot() //Regresa 1 si sólo hay un punto (antes de la cruz)
     free(color);
     return val;
 }
-int isLine() //Regresa 1 si hay una línea (antes de cruz)
+int isLine() //Regresa 1 si hay una lï¿½nea (antes de cruz)
 {
     int val = 0;
 
@@ -1183,7 +1180,7 @@ int isLine() //Regresa 1 si hay una línea (antes de cruz)
 }
 int isLastLayerDone()
 {
-    //Se empieza suponiendo que la cara está hecha
+    //Se empieza suponiendo que la cara estï¿½ hecha
     int val = 1;
 
     int *color = malloc(sizeof(int));
@@ -1209,7 +1206,7 @@ int isLastLayerDone()
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////                                              Algoritmos de F2L                                 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la esquina actual
+int getCornerPosition(int corner) //Devuelve el nï¿½mero en donde se encuentra la esquina actual
 {
     //Valor a devolver
     int position = 0;
@@ -1233,7 +1230,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
     switch (corner)
     {
         case 1:
-            //Empezar inspección del cubo para esquina EDFL
+            //Empezar inspecciï¿½n del cubo para esquina EDFL
             if (down[0][0] == *downColor)
             {
                 if (left[2][2] == *leftColor && front[2][0] == *frontColor)
@@ -1434,7 +1431,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
             }
 
         case 2:
-            //Empezar inspección del cubo para esquina EDFR
+            //Empezar inspecciï¿½n del cubo para esquina EDFR
 
             if (down[0][0] == *downColor)
             {
@@ -1471,7 +1468,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara frontal
+            //Si la esquina estï¿½ en la cara frontal
             if (front[0][0] == *downColor)
             {
                 //Los valores complementarios son left[0][2] y up[2][0]
@@ -1509,7 +1506,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara derecha
+            //Si la esquina estï¿½ en la cara derecha
             if (right[0][0] == *downColor)
             {
                 //Los valores complementarios son front[0][2] y up[2][2]
@@ -1547,7 +1544,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara trasera
+            //Si la esquina estï¿½ en la cara trasera
             if (back[0][0] == *downColor)
             {
                 //Los valores complementarios son right[0][2] y up[0][2]
@@ -1585,7 +1582,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara izquierda
+            //Si la esquina estï¿½ en la cara izquierda
             if (left[0][0] == *downColor)
             {
                 //Los valores complementarios son back[0][2] y up[0][0]
@@ -1623,7 +1620,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara de arriba
+            //Si la esquina estï¿½ en la cara de arriba
             if (up[0][0] == *downColor)
             {
                 //Los valores complementarios left[0][0] y back[0][2]
@@ -1662,9 +1659,9 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
             }
 
         case 3:
-            //Empezar inspección del cubo para esquina EDRB
+            //Empezar inspecciï¿½n del cubo para esquina EDRB
 
-            //Si la esquina está en la cara de abajo
+            //Si la esquina estï¿½ en la cara de abajo
             if (down[0][0] == *downColor)
             {
                 //Los valores complementarios son front[2,0] y left[2,2]
@@ -1702,7 +1699,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara frontal
+            //Si la esquina estï¿½ en la cara frontal
             if (front[0][0] == *downColor)
             {
                 //Los valores complementarios son left[0][2] y up[2][0]
@@ -1740,7 +1737,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara derecha
+            //Si la esquina estï¿½ en la cara derecha
             if (right[0][0] == *downColor)
             {
                 //Los valores complementarios son front[0][2] y up[2][2]
@@ -1778,7 +1775,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara trasera
+            //Si la esquina estï¿½ en la cara trasera
             if (back[0][0] == *downColor)
             {
                 //Los valores complementarios son right[0][2] y up[0][2]
@@ -1816,7 +1813,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara izquierda
+            //Si la esquina estï¿½ en la cara izquierda
             if (left[0][0] == *downColor)
             {
                 //Los valores complementarios son back[0][2] y up[0][0]
@@ -1854,7 +1851,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara de arriba
+            //Si la esquina estï¿½ en la cara de arriba
             if (up[0][0] == *downColor)
             {
                 //Los valores complementarios left[0][0] y back[0][2]
@@ -1893,9 +1890,9 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
             }
 
         case 4:
-            //Empezar inspección del cubo para esquina EDBL
+            //Empezar inspecciï¿½n del cubo para esquina EDBL
 
-            //Si la esquina está en la cara de abajo
+            //Si la esquina estï¿½ en la cara de abajo
             if (down[0][0] == *downColor)
             {
                 //Los valores complementarios son front[2,0] y left[2,2]
@@ -1933,7 +1930,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara frontal
+            //Si la esquina estï¿½ en la cara frontal
             if (front[0][0] == *downColor)
             {
                 //Los valores complementarios son left[0][2] y up[2][0]
@@ -1971,7 +1968,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara derecha
+            //Si la esquina estï¿½ en la cara derecha
             if (right[0][0] == *downColor)
             {
                 //Los valores complementarios son front[0][2] y up[2][2]
@@ -2042,7 +2039,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
                 }
             }
 
-            //Si la esquina está en la cara izquierda
+            //Si la esquina estï¿½ en la cara izquierda
             if (left[0][0] == *downColor)
             {
                 if (back[0][2] == *backColor && up[0][0] == *leftColor)
@@ -2118,7 +2115,7 @@ int getCornerPosition(int corner) //Devuelve el número en donde se encuentra la 
     free(upColor);
     free(downColor);
 
-    //Regresar posición
+    //Regresar posiciï¿½n
     return position;
 }
 
@@ -2513,34 +2510,54 @@ int getEdgePosition(int arista)
 
 void setBlock1() //Orienta bloque 1 (esquina y arista)
 {
-    while (!(getCornerPosition(1) == 19 || getCornerPosition(1) == 17 || getCornerPosition(1) == 15 || getCornerPosition(1) == 13 || getCornerPosition(1) == 1) &&
-          !(getEdgePosition(1) == 20 || getEdgePosition(1) == 18 || getEdgePosition(1) == 16 || getEdgePosition(1) == 14 || getEdgePosition(1) == 10))
+    //Se repite la instrucciÃ³n hasta que el bloque estÃ© acomodado para aplicar algÃºn algoritmo
+    while ((getCornerPosition(1) != 19 && getCornerPosition(1) != 17 && getCornerPosition(1) != 15 && getCornerPosition(1) != 13 && getCornerPosition(1) != 1) ||
+           (getEdgePosition(1) != 20 && getEdgePosition(1) != 18 && getEdgePosition(1) != 16 && getEdgePosition(1) != 14 && getEdgePosition(1) != 9))
     {
+        //Si el bloque no estÃ¡ acomodado, acomodarlo
+        //Â¿QuÃ© es lo que no estÃ¡ acomodaado? Â¿La esquina? Â¿El arista? Â¿Los dos?
+        //Si la esquina esta mal
+        if (getCornerPosition(1) != 19 && getCornerPosition(1) != 17 && getCornerPosition(1) != 15 && getCornerPosition(1) != 13 && getCornerPosition(1) != 1)
+        {
+            //Acomodar esquina
+            //Si la esquina no estÃ¡ acomodada, sÃ³lo puede haber 3 ubicaciones posibles, que son
+        }
+        //Si el arista esta mal
+        if (getEdgePosition(1) != 20 && getEdgePosition(1) != 18 && getEdgePosition(1) != 16 && getEdgePosition(1) != 14 && getEdgePosition(1) != 9)
+        {
+            //Acomodar arista
+        }
 
     }
 }
+
 void setBlock2() //Orienta bloque 2 (esquina y arista)
 {
-    while !(getCornerPosition(2) == 19 || getCornerPosition(2) == 17 || getCornerPosition(2) == 15 || getCornerPosition(2) == 13 || getCornerPosition(2) == 3) &&
+    //Se repite la instrucciÃ³n hasta que el bloque estÃ© acomodado para aplicar algÃºn algoritmo
+    while ((getCornerPosition(2) != 19 && getCornerPosition(2) != 17 && getCornerPosition(2) != 15 && getCornerPosition(2) != 13 && getCornerPosition(2) != 3) ||
+           (getEdgePosition(2) != 20 && getEdgePosition(2) != 18 && getEdgePosition(2) != 16 && getEdgePosition(2) != 14 && getEdgePosition(2) != 10))
     {
-
     }
 }
-void setBlock1() //Orienta bloque 3 (esquina y arista)
+
+void setBlock3() //Orienta bloque 3 (esquina y arista)
 {
-    while !(getCornerPosition(3) == 19 || getCornerPosition(3) == 17 || getCornerPosition(3) == 15 || getCornerPosition(3) == 13 || getCornerPosition(3) == 5) &&
+    //Se repite la instrucciÃ³n hasta que el bloque estÃ© acomodado para aplicar algÃºn algoritmo
+    while ((getCornerPosition(3) != 19 && getCornerPosition(3) != 17 && getCornerPosition(3) != 15 && getCornerPosition(3) != 13 && getCornerPosition(3) != 5) ||
+           (getEdgePosition(3) != 20 && getEdgePosition(3) != 18 && getEdgePosition(3) != 16 && getEdgePosition(3) != 14 && getEdgePosition(3) != 11))
     {
-
     }
-
 }
-void setBlock2() //Orienta bloque 4 (esquina y arista)
+
+void setBlock4() //Orienta bloque 4 (esquina y arista)
 {
-    while !(getCornerPosition(4) == 19 || getCornerPosition(4) == 17 || getCornerPosition(4) == 15 || getCornerPosition(4) == 13 || getCornerPosition(4) == 7) &&
+    //Se repite la instrucciÃ³n hasta que el bloque estÃ© acomodado para aplicar algÃºn algoritmo
+    while ((getCornerPosition(4) != 19 && getCornerPosition(4) != 17 && getCornerPosition(4) != 15 && getCornerPosition(4) != 13 && getCornerPosition(4) != 7) ||
+           (getEdgePosition(4) != 20 && getEdgePosition(4) != 18 && getEdgePosition(4) != 16 && getEdgePosition(4) != 14 && getEdgePosition(4) != 12))
     {
-
     }
 }
+
 
 //Basicos
 //Esquina apuntando con el blanco a un lateral
@@ -2548,4 +2565,3 @@ void setBlock2() //Orienta bloque 4 (esquina y arista)
 //Esquina en capa inferior arista cara superior
 //Arista anclada y esquina en cara superior
 //Arista y esquina ancladas
-
