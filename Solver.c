@@ -3106,7 +3106,6 @@ void solveBlock1()
 			}
 		}
     }
-
 }
 
 //Resolver bloque 2
@@ -3132,7 +3131,39 @@ void solveBlock2()
 			//Aqui hay 5 algoritmos posibles
 			
 			// [MAIN] El arista SI esta bien colocada (2)
+			if (front[1][2] == frontColor && right[1][0] == rightColor)
+			{
+				//DownColor esta en la cara frontal
+				if (front[2][2] == downColor)
+				{
+					R(); U(); RP(); UP(); R(); U(); U(); RP(); UP(); R(); U(); RP(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara derecha
+				else
+				{
+					R(); UP(); RP(); U(); R(); U(); U(); RP(); U(); R(); UP(); RP(); return; // *WORKING* //
+				}
+			}
 			// [MAIN] El arista NO esta bien colocada (3)
+			if (front[1][2] != frontColor && right[1][0] != rightColor)
+			{
+				//DownColor esta en la cara inferior (esquina bien colocada)
+				if (down[0][2] == downColor)
+				{
+					R(); U(); U(); RP(); U(); R(); U(); U(); RP(); U(); FP(); UP(); F(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara frontal
+				if (front[2][2] == downColor)
+				{
+					FP(); U(); F(); U(); U(); R(); U(); RP(); U(); R(); UP(); RP(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara derecha
+				if (right[2][0] == downColor)
+				{
+					R(); UP(); RP(); U(); RP(); UP(); R(); FP(); U(); F(); return; // *WORKING* //
+				}
+			}
+			
 		}
 		
 		//-------------------------------------------------------------------------------------------SI SOLO LA ESQUINA ESTA ANCLADA
@@ -3141,9 +3172,62 @@ void solveBlock2()
 			//Aqui hay 6 algoritmos posibles
 			
 			// [MAIN] La esquina esta bien colocada (2)
+			if (down[0][2] == downColor)
+			{
+				//Orientar arista a posicion 14
+				while (getEdgePosition(2) != 14)
+				{
+					UP();
+				}
+				//Completa la cara FRONTAL
+				if (front[0][1] == frontColor)
+				{
+					U(); R(); UP(); RP(); UP(); FP(); U(); F(); return; // *WORKING* //
+				}
+				//Completa la cara DERECHA
+				else
+				{
+					UP(); UP(); FP(); U(); F(); U(); R(); UP(); RP(); return; // *WORKING* //
+				}
+			}
 			// [MAIN] DownColor esta en la cara FRONTAL (2)
+			if (front[2][2] == downColor)
+			{
+				//Orientar arista a posicion 16
+				while (getEdgePosition(2) != 16)
+				{
+					UP();
+				}
+				//Completa la cara DERECHA
+				if (right[0][1] == rightColor)
+				{
+					R(); UP(); RP(); U(); R(); UP(); RP(); return; // *WORKING* //
+				}
+				//NO Completa la cara DERECHA
+				else
+				{
+					UP(); R(); UP(); RP(); FP(); UP(); F(); return; // *WORKING* //
+				}
+			}
 			// [MAIN] DownColor esta en la cara DERECHA (2)
-			
+			if (right[2][0] == downColor)
+			{
+				//Orientar arista a posicion 14
+				while (getEdgePosition(2) != 14)
+				{
+					UP();
+				}
+				//Completa la cara FRONTAL
+				if (front[0][1] == frontColor)
+				{
+					 FP(); U(); F(); UP(); FP(); U(); F(); return; // *WORKING* //
+				}
+				//NO Completa la cara FRONTAL
+				else
+				{
+					UP(); R(); U(); RP(); UP(); R(); U(); RP(); return; // *WORKING* //
+				}
+			}
 		}
 		
 		//-------------------------------------------------------------------------------------------SI SOLO EL ARISTA ESTA ANCLADA
@@ -3151,9 +3235,49 @@ void solveBlock2()
 			
 			//Aqui hay 6 algoritmos posibles
 			//Orientar esquina a posicion 15
+			while (getCornerPosition(2) != 15)
+			{
+				U();
+			}
 			
 			// [MAIN] El arista SI esta bien colocada (3)
+			if (front[1][2] == frontColor && right[1][0] == rightColor)
+			{
+				//DownColor esta en la cara SUPERIOR
+				if (up[2][2] == downColor)
+				{
+					R(); U(); RP(); UP(); R(); U(); RP(); UP(); R(); U(); RP(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara FRONTAL
+				if (front[0][2] == downColor)
+				{
+					UP(); R(); UP(); RP(); U(); U(); R(); UP(); RP(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara DERECHA
+				if (right[0][0] == downColor)
+				{
+					UP(); R(); U(); U(); RP(); U(); R(); U(); RP(); return; // *WORKING* //
+				}
+			}
 			// [MAIN] El arista NO esta bien colocada (3)
+			else
+			{
+				//DownColor esta en la cara SUPERIOR
+				if (up[2][2] == downColor)
+				{
+					R(); UP(); RP(); FP(); U(); U(); F(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara FRONTAL
+				if (front[0][2] == downColor)
+				{
+					UP(); R(); U(); RP(); U(); FP(); UP(); F(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara DERECHA
+				if (right[0][0] == downColor)
+				{
+					U(); FP(); UP(); F(); UP(); R(); U(); RP(); return; // *WORKING* //
+				}
+			}
 		}
 		
 		//-------------------------------------------------------------------------------------------NINGUNA PIEZA ESTA ANCLADA
@@ -3161,27 +3285,27 @@ void solveBlock2()
 			
 			//Aqui hay 24 algoritmos posibles
 			//Orientar esquina a posicion 15
+			while (getCornerPosition(2) != 15)
+			{
+				UP();
+			}
 			
 			// [MAIN] Las piezas estan JUNTAS (12)
-			
+			if (getEdgePosition(2) == 14 || getEdgePosition(2) == 16)
+			{
 				// [O] Las piezas estan JUNTAS HACIA FRONTAL (6)
 				// [O] las piezas estan JUNTAS HACIA DERECHA (6)
-				
+			}	
 			// [MAIN] las piezas estan SEPARADAS (12)
-			
+			else
+			{
 				// [I I] Las piezas estan SEPARADAS HACIA TRASERA (6)
 				// [I I] Las piezas estan SEPARADAS HACIA IZQUIERDA (6)
+			}
+				
 		}
 	}
 }
-
-
-
-
-
-
-
-
 
 void solveBlock3()
 {
