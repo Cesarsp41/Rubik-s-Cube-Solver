@@ -3171,7 +3171,6 @@ void solveBlock2()
 		//-------------------------------------------------------------------------------------------SI SOLO LA ESQUINA ESTA ANCLADA
 		else if (esquinaPos == 3 && aristaPos != 10) 
 		{
-			
 			//Aqui hay 6 algoritmos posibles
 			
 			// [MAIN] La esquina esta bien colocada (2)
@@ -3492,9 +3491,64 @@ void solveBlock2()
 	}
 }
 
+//Resolver bloque 3
 void solveBlock3()
 {
+	int backColor = back[1][1];
+	int rightColor = right[1][1];
+	int downColor = down[1][1];
+	int esquinaPos = 0;
+	int aristaPos = 0;
+	
+	//Mientras el bloque 3 no este acomodado
+	while ((right[1][2] != rightColor) || (right[2][2] != rightColor) || (back[1][0] != backColor) || (back[2][0] != backColor))
+	{
+		esquinaPos = getCornerPosition(3);
+		aristaPos = getEdgePosition(3);
+		
+		//Acomodar el bloque
+		
+		//-------------------------------------------------------------------------------------------SI LA ESQUINA Y EL ARISTA ESTAN ANCLADOS
+		if (esquinaPos == 5 && aristaPos == 11)
+		{
+			//Aqui hay 5 algoritmos posibles
+			// [MAIN] El arista SI esta bien colocada (2)
+			// [MAIN] El arista NO esta bien colocada (3)
+		}
+		//-------------------------------------------------------------------------------------------SI SOLO LA ESQUINA ESTA ANCLADA
+		else if (esquinaPos == 5 && aristaPos != 11) 
+		{
+			//Aqui hay 6 algoritmos posibles
+			// [MAIN] La esquina esta bien colocada (2)
+			// [MAIN] DownColor esta en la cara DERECHA (2)
+			// [MAIN] DownColor esta en la cara TRASERA (2)
 
+		}
+		//-------------------------------------------------------------------------------------------SI SOLO EL ARISTA ESTA ANCLADA
+		else if (esquinaPos != 5 && aristaPos == 11)
+		{
+			//Aqui hay 6 algoritmos posibles
+			//Orientar esquina a posicion 17
+			while (getCornerPosition(3) != 17)
+			{
+				U();
+			}
+			// [MAIN] El arista SI esta bien colocada (3)
+			// [MAIN] El arista NO esta bien colocada (3)
+		}
+		//-------------------------------------------------------------------------------------------NINGUNA PIEZA ESTA ANCLADA
+		else
+		{
+			//Aqui hay 24 algoritmos posibles
+			//Orientar esquina a posicion 15
+			while (getCornerPosition(3) != 17)
+			{
+				U();
+			}
+			// [MAIN] Las piezas estan JUNTAS (12)
+			// [MAIN] las piezas estan SEPARADAS (12)
+		}
+	}
 }
 
 void solveBlock4()
