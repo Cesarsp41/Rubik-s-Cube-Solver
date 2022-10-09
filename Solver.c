@@ -121,6 +121,9 @@ int main()
     solveBlock1();
 	setBlock2();
 	solveBlock2();
+	setBlock3();
+	solveBlock3();
+	setBlock4();
 
     //Printing
 }
@@ -1065,7 +1068,7 @@ void OLLL()
 {
     F(); U(); R(); UP(); RP(); FP();
 }
-void OLLA1() //Cruz f?cil
+void OLLA1() //Cruz facil
 {
     R(); U(); U(); RP(); UP();
     R(); U(); RP(); UP();
@@ -1094,7 +1097,7 @@ void OLLA6() //Nave 2
     L(); F(); RP(); FP();
     LP(); F(); R(); FP();
 }
-void OLLA7() //Mo?o
+void OLLA7() //Mono
 {
     RP(); FP(); LP(); F(); R(); FP(); L(); F();
 }
@@ -3402,12 +3405,12 @@ void solveBlock2()
 						//Arista. Color FRONTAL
 						if (up[0][1] == frontColor)
 						{
-							U(); R(); U(); U(); RP(); U(); R(); UP(); RP(); return;
+							U(); R(); U(); U(); RP(); U(); R(); UP(); RP(); return; // *WORKING* //
 						}
 						//Arista. Color DERECHA
 						else
 						{
-							U(); U(); FP(); UP(); F(); UP(); FP(); U(); F(); return;
+							U(); U(); FP(); UP(); F(); UP(); FP(); U(); F(); return; // *WORKING* //
 						}
 					}
 					//Esquina. DownColor esta en la cara FRONTAL (2)
@@ -3416,12 +3419,12 @@ void solveBlock2()
 						//Arista. Color FRONTAL
 						if (up[0][1] == frontColor)
 						{
-							UP(); R(); U(); RP(); UP(); R(); U(); U(); R(); return;
+							UP(); R(); U(); RP(); UP(); R(); U(); U(); RP(); return; // *WORKING* // 
 						}
 						//Arista. Color DERECHA
 						else
 						{
-							UP(); R(); UP(); RP(); U(); FP(); UP(); F(); return;
+							UP(); R(); UP(); RP(); U(); FP(); UP(); F(); return; // *WORKING* //
 						}
 					}
 					//Esquina. DownColor esta en la cara DERECHA (2)
@@ -3430,12 +3433,12 @@ void solveBlock2()
 						//Arista. Color FRONTAL
 						if (up[0][1] == frontColor)
 						{
-							R(); U(); RP(); return;
+							R(); U(); RP(); return; // *WORKING* //
 						}
 						//Arista. Color DERECHA
 						else
 						{
-							U(); FP(); U(); U(); F(); U(); U(); FP(); U(); F(); return;
+							U(); FP(); U(); U(); F(); U(); U(); FP(); U(); F(); return; // *WORKING* //
 						}
 					}
 				}
@@ -3448,12 +3451,12 @@ void solveBlock2()
 						//Arista. Color FRONTAL
 						if (up[1][0] == frontColor)
 						{
-							U(); U(); R(); U(); RP(); U(); R(); UP(); RP(); return;
+							U(); U(); R(); U(); RP(); U(); R(); UP(); RP(); return; // *WORKING* //
 						}
 						//Arista. Color DERECHA
 						else
 						{
-							UP(); FP(); U(); U(); F(); UP(); FP(); U(); F(); return;
+							UP(); FP(); U(); U(); F(); UP(); FP(); U(); F(); return; // *WORKING* //
 						}
 					}
 					//Esquina. DownColor en cara FRONTAL (2)
@@ -3462,12 +3465,12 @@ void solveBlock2()
 						//Arista. Color FRONTAL
 						if (up[1][0] == frontColor)
 						{
-							UP(); R(); U(); U(); RP(); U(); U(); R(); UP(); RP(); return;
+							UP(); R(); U(); U(); RP(); U(); U(); R(); UP(); RP(); return; // *WORKING* //
 						}
 						//Arista. Color DERECHA
 						else
 						{
-							FP(); UP(); F(); return;
+							FP(); UP(); F(); return; // *WORKING* //
 						}
 					}
 					//Esquina. DownColor en cara DERECHA (2)
@@ -3476,12 +3479,12 @@ void solveBlock2()
 						//Arista. Color FRONTAL
 						if (up[1][0] == frontColor)
 						{
-							UP(); R(); U(); RP(); U(); R(); U(); RP(); return;
+							UP(); R(); U(); RP(); U(); R(); U(); RP(); return; // *WORKING* //
 						}
 						//Arista. Color DERECHA
 						else
 						{
-							U(); FP(); UP(); F(); U(); U(); FP(); U(); F(); return;
+							U(); FP(); UP(); F(); U(); U(); FP(); U(); F(); return; // *WORKING* //
 						}
 					}
 				}
@@ -3769,13 +3772,159 @@ void solveBlock3()
 			// [MAIN] las piezas estan SEPARADAS (12)
 			else
 			{
-				
+				// [I I] Las piezas estan SEPARADAS HACIA FRONTAL (6)
+				if (getEdgePosition(3) == 14)
+				{
+					//DownColor esta en la cara SUPERIOR (2)
+					if (up[0][2] == downColor)
+					{
+						//Arista. Color DERECHA
+						if (up[2][1] == rightColor)
+						{
+							U(); U(); B(); U(); BP(); U(); B(); UP(); BP(); return; // *WORKING* //
+						}
+						//Arista. Color TRASERA
+						else
+						{
+							UP(); RP(); U(); U(); R(); UP(); RP(); U(); R(); return; // *WORKING* //
+						}
+					}
+					//DownColor esta en la cara DERECHA (2)
+					if (right[0][2] == downColor)
+					{
+						//Arista. Color DERECHA
+						if (up[2][1] == rightColor)
+						{
+							UP(); B(); U(); U(); BP(); U(); U(); B(); UP(); BP(); return; // *WORKING* //
+						}
+						//Arista. Color TRASERA
+						else
+						{
+							RP(); UP(); R(); return; // *WORKING* //
+						}
+					}
+					//DownColor esta en la cara TRASERA (2)
+					if (back[0][0] == downColor)
+					{
+						//Arista. Color DERECHA
+						if (up[2][1] == rightColor)
+						{
+							UP(); B(); U(); BP(); U(); B(); U(); BP(); return; // *WORKING* //
+						}
+						//Arista. Color TRASERA
+						else
+						{
+							U(); RP(); UP(); R(); U(); U(); RP(); U(); R(); return; // *WORKING* //
+						}
+					}
+				}
+				// [I I] Las piezas estan SEPARADAS HACIA IZQUIERDA (6)
+				else
+				{
+					//DownColor esta en la cara SUPERIOR (2)
+					if (up[0][2] == downColor)
+					{
+						//Arista. Color Derecha
+						if (up[1][0] == rightColor)
+						{
+							U(); B(); U(); U(); BP(); U(); B(); UP(); BP(); return; // *WORKING* //
+						}
+						//Arista. Color TRASERA
+						else
+						{
+							U(); U(); RP(); UP(); R(); UP(); RP(); U(); R(); return; // *WORKING* //
+						}
+					}
+					//DownColor esta en la cara DERECHA (2)
+					if (right[0][2] == downColor)
+					{
+						//Arista. Color Derecha
+						if (up[1][0] == rightColor)
+						{
+							UP(); B(); U(); BP(); UP(); B(); U(); U(); BP(); return; // *WORKING* //
+						}
+						//Arista. Color TRASERA
+						else
+						{
+							UP(); B(); UP(); BP(); U(); RP(); UP(); R(); return; // *WORKING* //
+						}
+					}
+					//DownColor esta en la cara TRASERA (2)
+					if (back[0][0] == downColor)
+					{
+						//Arista. Color Derecha
+						if (up[1][0] == rightColor)
+						{
+							B(); U(); BP(); return; // *WORKING* //
+						}
+						//Arista. Color TRASERA
+						else
+						{
+							U(); RP(); U(); U(); R(); U(); U(); RP(); U(); R(); return; // *WORKING* //
+						}
+					}
+				}
 			}
 		}
 	}
 }
 
+//Resolver bloque 4
 void solveBlock4()
 {
+	int backColor = back[1][1];
+	int leftColor = left[1][1];
+	int downColor = down[1][1];
+	int esquinaPos = 0;
+	int aristaPos = 0;
+	
+	//Mientras el bloque 4 no este acomodado
+	while ((back[1][2] != backColor) || (back[2][2] != backColor) || (left[1][0] != leftColor) || (left[2][0] != leftColor))
+	{
+		esquinaPos = getCornerPosition(4);
+		aristaPos = getEdgePosition(4);
+		
+		//Acomodar el bloque
+		
+		//-------------------------------------------------------------------------------------------SI LA ESQUINA Y EL ARISTA ESTAN ANCLADOS
+		if (esquinaPos == 7 && aristaPos == 12)
+		{
+			//Aqui hay 5 algoritmos posibles
+			// [MAIN] El arista SI esta bien colocada (2)
+			if (back[1][2] == backColor && left[1][0] == leftColor)
+			{
+				
+			}
+			// [MAIN] El arista NO esta bien colocada (3)
+			else
+			{
+				
+			}
+		}
+		//-------------------------------------------------------------------------------------------SI SOLO LA ESQUINA ESTA ANCLADA
+		else if (esquinaPos == 7 && aristaPos != 12)
+		{
+			
+		}
+		//-------------------------------------------------------------------------------------------SI SOLO EL ARISTA ESTA ANCLADA
+		else if (esquinaPos != 7 && aristaPos == 12)
+		{
+			
+		}
+		//-------------------------------------------------------------------------------------------NINGUNA PIEZA ESTA ANCLADA
+		else
+		{
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
 
+	
+	
 }
