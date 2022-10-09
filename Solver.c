@@ -3,7 +3,7 @@
     Nombre: Cesar Soltero Perez
     Fecha: 28/09/2022
 
-    Update: 8/10/2022
+    Update: 9/10/2022
 
     Cambios a hacer:
     -Funcion F no es compatible con Arduino, cambiar a FR cuando se exporta (cuando se termine)
@@ -12,8 +12,8 @@
     -Funci?n para cancelar escaner
 
     Objetivos:
-    -Revisar casos de SolveBlock1()
-    -Empezar SolveBlock2()
+    -Revisar casos de SolveBlock2() separados
+    -Programar casos SolveBlock3() separados
 */
 
 #include <stdio.h>
@@ -3338,7 +3338,7 @@ void solveBlock2()
 						//La arista NO completa la cara FRONTAL
 						else
 						{
-							R(); UP(); RP(); U(); R(); UP(); RP(); U(); U(); return;
+							U(); FP(); U(); U(); F(); UP(); R(); U(); RP(); return; // *WORKING* //
 						}
 					}
 				}
@@ -3351,12 +3351,12 @@ void solveBlock2()
 						//La arista completa la cara DERECHA
 						if (right[0][1] == rightColor)
 						{
-							R(); U(); U(); RP(); UP(); R(); U(); RP(); return;
+							R(); U(); U(); RP(); UP(); R(); U(); RP(); return; // *WORKING* //
 						}
 						//La arista NO completa la cara DERECHA
 						else
 						{
-							R(); U(); RP(); U(); R(); U(); U(); RP(); FP(); U(); U(); F(); return;
+							R(); U(); RP(); U(); R(); U(); U(); RP(); FP(); U(); U(); F(); return; // *WORKING* //
 						}
 					}
 					//DownColor esta en la cara FRONTAL (2)
@@ -3365,12 +3365,12 @@ void solveBlock2()
 						//La arista completa la cara DERECHA
 						if (right[0][1] == rightColor)
 						{
-							U(); R(); UP(); RP(); return;
+							U(); R(); UP(); RP(); return; // *WORKING* //
 						}
 						//La arista NO completa la cara DERECHA
 						else
 						{
-							UP(); RP(); U(); U(); R(); U(); FP(); UP(); F(); return;
+							UP(); R(); U(); U(); RP(); U(); FP(); UP(); F(); return; // *WORKING* //
 						}
 					}
 					//DownColor esta en la cara DERECHA (2)
@@ -3379,12 +3379,12 @@ void solveBlock2()
 						//La arista completa la cara DERECHA
 						if (right[0][1] == rightColor)
 						{
-							UP(); R(); UP(); RP(); U(); R(); U(); RP(); return;
+							UP(); R(); UP(); RP(); U(); R(); U(); RP(); return; // *WORKING* //
 						}
 						//La arista NO completa la cara DERECHA
 						else
 						{
-							R(); UP(); RP(); U(); U(); FP(); UP(); F(); return;
+							R(); UP(); RP(); U(); U(); FP(); UP(); F(); return; // *WORKING* //
 						}
 					}
 				}
@@ -3513,15 +3513,101 @@ void solveBlock3()
 		{
 			//Aqui hay 5 algoritmos posibles
 			// [MAIN] El arista SI esta bien colocada (2)
+			if (right[1][0] == rightColor && back[1][0] == backColor)
+			{
+				//DownColor esta en la cara DERECHA
+				if (right[2][2] == downColor)
+				{
+					B(); U(); BP(); UP(); B(); U(); U(); BP(); UP(); B(); U(); BP(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara TRASERA
+				else
+				{
+					B(); UP(); BP(); U(); B(); U(); U(); BP(); U(); B(); UP(); BP(); return; // *WORKING* //
+				}
+			}
 			// [MAIN] El arista NO esta bien colocada (3)
+			else
+			{
+				//DownColor esta en la cara INFERIOR (esquina bien colocada)
+				if (down[2][2] == downColor)
+				{
+					B(); U(); U(); BP(); U(); B(); U(); U(); BP(); U(); RP(); UP(); R(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara DERECHA
+				if (right[2][2] == rightColor)
+				{
+					RP(); U(); R(); U(); U(); B(); U(); BP(); U(); B(); UP(); BP(); return; // *WORKING* //
+				} 
+				//DownColor esta en la cara TRASERA
+				if (back[2][0] == backColor)
+				{
+					B(); UP(); BP(); U(); BP(); UP(); B(); RP(); U(); R(); return; // *WORKING* //
+				}
+			}
 		}
-		//-------------------------------------------------------------------------------------------SI SOLO LA ESQUINA ESTA ANCLADA
+		//-------------------------------------------------------------------------------------------SI SOLO LA ESQUINA ESTA ANCLADA (R = B) (F = R)
 		else if (esquinaPos == 5 && aristaPos != 11) 
 		{
 			//Aqui hay 6 algoritmos posibles
+			
 			// [MAIN] La esquina esta bien colocada (2)
+			if (down[2][2] == downColor)
+			{
+				//Orientar arista a posicion 16
+				while (getEdgePosition(3) != 16)
+				{
+					UP();
+				}
+				//El arista completa la cara DERECHA
+				if (right[0][1] == rightColor)
+				{
+					U(); B(); UP(); BP(); UP(); RP(); U(); R(); return; // *WORKING* //
+				}
+				//El arista completa la cara TRASERA
+				else
+				{
+					UP(); UP(); RP(); U(); R(); U(); B(); UP(); BP(); return; // *WORKING* //
+				}
+			}
 			// [MAIN] DownColor esta en la cara DERECHA (2)
+			if (right[2][2] == downColor)
+			{
+				//Orientar arista a posicion 18
+				while (getEdgePosition(3) != 18)
+				{
+					UP();
+				}
+				//El arista completa la cara TRASERA
+				if (back[0][1] == backColor)
+				{
+					B(); UP(); BP(); U(); B(); UP(); BP(); return; // *WORKING* //
+				}
+				//El arista NO completa la cara TRASERA
+				else
+				{
+					UP(); B(); UP(); BP(); RP(); UP(); R(); return; // *WORKING* //
+				}
+			}
 			// [MAIN] DownColor esta en la cara TRASERA (2)
+			if (back[2][0] == downColor)
+			{
+				//Orientar arista a posicion 16
+				while (getEdgePosition(3) != 16)
+				{
+					UP();
+				}
+				//El arista completa la cara DERECHA
+				if (right[0][1] == rightColor)
+				{
+					RP(); U(); R(); UP(); RP(); U(); R(); return; // *WORKING* //
+				}
+				//El arista NO completa la cara DERECHA
+				else
+				{
+					UP(); B(); U(); BP(); UP(); B(); U(); BP(); return; // *WORKING* //
+				}
+			}
 
 		}
 		//-------------------------------------------------------------------------------------------SI SOLO EL ARISTA ESTA ANCLADA
@@ -3534,19 +3620,157 @@ void solveBlock3()
 				U();
 			}
 			// [MAIN] El arista SI esta bien colocada (3)
+			if (right[1][2] == rightColor)
+			{
+				//DownColor en la cara SUPERIOR
+				if (up[0][2] == downColor)
+				{
+					B(); U(); BP(); UP(); B(); U(); BP(); UP(); B(); U(); BP(); return; // *WORKING* //
+				}
+				//DownColor en la cara DERECHA
+				if (right[0][2] == downColor)
+				{
+					UP(); B(); UP(); BP(); U(); U(); B(); UP(); BP(); return; // *WORKING* //
+				}
+				//DownColor en la cara TRASERA
+				if (back[0][0] == downColor)
+				{
+					UP(); B(); U(); U(); BP(); U(); B(); U(); BP(); return; // *WORKING* //
+				}
+			}
 			// [MAIN] El arista NO esta bien colocada (3)
+			else
+			{
+				//DownColor en la cara SUPERIOR
+				if (up[0][2] == downColor)
+				{
+					B(); UP(); BP(); RP(); U(); U(); R(); return; // *WORKING* //
+				}
+				//DownColor en la cara DERECHA
+				if (right[0][2] == downColor)
+				{
+					UP(); B(); U(); BP(); U(); RP(); UP(); R(); return; // *WORKING* //
+				}
+				//DownColor en la cara TRASERA
+				if (back[0][0] == downColor)
+				{
+					U(); RP(); UP(); R(); UP(); B(); U(); BP(); return; // *WORKING* //
+				}
+			}
 		}
 		//-------------------------------------------------------------------------------------------NINGUNA PIEZA ESTA ANCLADA
 		else
 		{
 			//Aqui hay 24 algoritmos posibles
-			//Orientar esquina a posicion 15
+			
+			//Orientar esquina a posicion 17
 			while (getCornerPosition(3) != 17)
 			{
 				U();
 			}
 			// [MAIN] Las piezas estan JUNTAS (12)
+			if (getEdgePosition(3) == 18 || getEdgePosition(3) == 16)
+			{
+				// [O] Las piezas estan JUNTAS HACIA DERECHA (6)
+				if (getEdgePosition(3) == 16)
+				{
+					//DownColor esta en la cara SUPERIOR (2)
+					if (up[0][2] == downColor)
+					{
+						//La arista completa la cara DERECHA
+						if (right[0][1] == rightColor)
+						{
+							RP(); U(); U(); R(); U(); RP(); UP(); R(); return; // *WORKING* //
+						}
+						//La arista NO completa la cara DERECHA
+						else
+						{
+							B(); U(); BP(); U(); U(); B(); U(); BP(); UP(); B(); U(); BP(); return; // *WORKING* //
+						}
+					}
+					//DownColor esta en la cara DERECHA (2)
+					if (right[0][2] == downColor)
+					{
+						//La arista completa la cara DERECHA
+						if (right[0][1] == rightColor)
+						{
+							U(); RP(); U(); R(); UP(); RP(); UP(); R(); return; // *WORKING* //
+						}
+						//La arista NO completa la cara DERECHA
+						else
+						{
+							RP(); U(); R(); U(); U(); B(); U(); BP(); return; // *WORKING* //
+						}
+						
+					}
+					//DownColor esta en la cara TRASERA (2)
+					if (back[0][0] == downColor)
+					{
+						//La arista completa la cara DERECHA
+						if (right[0][1] == rightColor)
+						{
+							UP(); RP(); U(); R(); return; // *WORKING* //
+						}
+						//La arista NO completa la cara DERECHA
+						else
+						{
+							U(); RP(); U(); U(); R(); UP(); B(); U(); BP(); return; // *WORKING* //
+						}
+					}
+				}
+				
+				// [O] Las piezas estan JUNTAS HACIA TRASERA (6)
+				else
+				{
+					//DownColor esta en la cara SUPERIOR (2)
+					if (up[0][2] == downColor)
+					{
+						//La arista completa la cara TRASERA
+						if (back[0][1] == backColor)
+						{
+							B(); U(); U(); BP(); UP(); B(); U(); BP(); return; // *WORKING* //
+						}
+						//La arista NO completa la cara TRASERA
+						else
+						{
+							B(); U(); BP(); U(); B(); U(); U(); BP(); RP(); U(); U(); R(); return; // *WORKING* //
+						}
+					}
+					//DownColor esta en la cara DERECHA (2)
+					if (right[0][2] == downColor)
+					{
+						//La arista completa la cara TRASERA
+						if (back[0][1] == backColor)
+						{
+							U(); B(); UP(); BP(); return; // *WORKING* //
+						}
+						//La arista NO completa la cara TRASERA
+						else
+						{
+							UP(); B(); U(); U(); BP(); U(); RP(); UP(); R(); return; // *WORKING* //
+						}
+					}
+					//DownColor esta en la cara TRASERA (2)
+					if (back[0][0] == downColor)
+					{
+						//La arista completa la cara TRASERA
+						if (back[0][1] == backColor)
+						{
+							UP(); B(); UP(); BP(); U(); B(); U(); BP(); return; // *WORKING* //
+						}
+						//La arista NO completa la cara TRASERA
+						else
+						{
+							B(); UP(); BP(); U(); U(); RP(); UP(); R(); return; // *WORKING* //
+						}
+					}
+				}
+			}
 			// [MAIN] las piezas estan SEPARADAS (12)
+			else
+			{
+				
+			}
 		}
 	}
 }
