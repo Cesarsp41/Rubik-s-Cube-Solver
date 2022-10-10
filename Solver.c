@@ -3992,12 +3992,43 @@ void solveBlock4()
 		//-------------------------------------------------------------------------------------------SI SOLO EL ARISTA ESTA ANCLADA
 		else if (esquinaPos != 7 && aristaPos == 12)
 		{
+			//Hay 6 algoritmos posibles
 			
+			//Orientar esquina a posicion 19
+			while (getCornerPosition(4) != 19)
+			{
+				U();
+			}
+			// [MAIN] El arista SI esta bien colocada (3)
+			if (back[1][2] == backColor)
+			{
+				//DownColor en la cara SUJPERIOR
+				//DownColor en la cara TRASERA
+				//DownColor en la cara IZQUIERDA
+			}	
+			// [MAIN] El arista NO esta bien colocada (3)
+			else
+			{
+				//DownColor en la cara SUPERIOR 
+				//DownColor en la cara TRASERA
+				//DownColor en la cara IZQUIERDA
+			}
+				
 		}
 		//-------------------------------------------------------------------------------------------NINGUNA PIEZA ESTA ANCLADA
 		else
 		{
+			//Hay 24 Algoritmos posibles
+
+			//Orientar esquina a posicion X
 			
+			//[MAIN] Las piezas estan JUNTAS (12)
+				//[O] Las piezas estan JUNTAS HACIA X (6)
+				//[O] Las piezas estan JUNTAS HACIA X (6)
+				
+			//[MAIN] Las piezas estan SEPARADAS (12)
+				//[I I] Las piezas estan SEPARADAS HACIA X (6)
+				//[I I] Las piezas estan SEPARADAS HACIA X (6)
 		}
 		
 	}	
