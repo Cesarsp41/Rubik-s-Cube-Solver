@@ -3,7 +3,7 @@
     Nombre: Cesar Soltero Perez
     Fecha: 28/09/2022
 
-    Update: 9/10/2022
+    Update: 10/10/2022
 
     Cambios a hacer:
     -Funcion F no es compatible con Arduino, cambiar a FR cuando se exporta (cuando se termine)
@@ -12,8 +12,10 @@
     -Funci?n para cancelar escaner
 
     Objetivos:
-    -Revisar casos de SolveBlock2() separados
-    -Programar casos SolveBlock3() separados
+    -Terminar SolveBlock4
+    -Hacer Cruz
+    -Algoritmo para revolver
+    -Validaciones
 */
 
 #include <stdio.h>
@@ -3890,21 +3892,102 @@ void solveBlock4()
 		if (esquinaPos == 7 && aristaPos == 12)
 		{
 			//Aqui hay 5 algoritmos posibles
+			
 			// [MAIN] El arista SI esta bien colocada (2)
 			if (back[1][2] == backColor && left[1][0] == leftColor)
 			{
-				
+				//DownColor esta en la cara TRASERA
+				if (back[2][2] == downColor)
+				{
+					L(); UP(); LP(); UP(); L(); U(); LP(); UP(); L(); U(); U(); LP(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara IZQUIERDA
+				else
+				{
+					L(); UP(); LP(); U(); L(); U(); U(); LP(); U(); L(); UP(); LP(); return; // *WORKING* //
+				}
 			}
 			// [MAIN] El arista NO esta bien colocada (3)
 			else
 			{
-				
+				//DownColor esta en la cara INFERIOR (Esquina bien colocada)
+				if (down[2][0] == downColor)
+				{
+					L(); UP(); LP(); U(); BP(); U(); U(); B(); U(); BP(); U(); U(); B(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara TRASERA
+				if (back[2][2] == downColor)
+				{
+					L(); UP(); LP(); U(); BP(); UP(); B(); UP(); BP(); UP(); B(); return; // *WORKING* //
+				}
+				//DownColor esta en la cara IZQUIERDA
+				if (left[2][0] == downColor)
+				{
+					L(); U(); LP(); UP(); L(); UP(); LP(); U(); U(); BP(); UP(); B(); return; // *WORKING* //
+				}
 			}
 		}
 		//-------------------------------------------------------------------------------------------SI SOLO LA ESQUINA ESTA ANCLADA
 		else if (esquinaPos == 7 && aristaPos != 12)
 		{
-			
+			//Aqui hay 6 algoritmos posibles
+			// [MAIN] La esquina esta bien colocada (2)
+			if (down[2][0] == downColor)
+			{
+				//Orientar arista a posicion 18
+				while (getEdgePosition(4) != 18)
+				{
+					UP();
+				}
+				//La arista completa la cara TRASERA
+				if (back[0][1] == backColor)
+				{
+					U(); L(); UP(); LP(); UP(); BP(); U(); B(); return; // *WORKING* //
+				}
+				//La arista completa la cara IZQUIERDA
+				else
+				{
+					UP(); UP(); BP(); U(); B(); U(); L(); UP(); LP(); return; // *WORKING* //
+				}
+			}
+			// [MAIN] DownColor esta en la cara TRASERA (2)
+			if (back[2][2] == downColor)
+			{
+				//Orientar arista a posicion 18
+				while (getEdgePosition(4) != 18)
+				{
+					UP();
+				}
+				//La arista completa la cara TRASERA
+				if (back[0][1] == backColor)
+				{
+					BP(); UP(); B(); U(); BP(); UP(); B(); return; // *WORKING* //
+				}
+				//La arista completa la cara IZQUIERDA
+				else
+				{
+					UP(); L(); UP(); LP(); U(); L(); UP(); LP(); return; // *WORKING* //
+				}
+			}
+			// [MAIN] DownColor esta en la cara IZQUIERDA (2)
+			if (left[2][0] == downColor)
+			{
+				//Orientar arista a posicion 18
+				while (getEdgePosition(4) != 18)
+				{
+					UP();
+				}
+				//La arista completa la cara TRASERA
+				if (back[0][1] == backColor)
+				{
+					BP(); U(); B(); UP(); BP(); U(); B(); return; // *WORKING* //
+				}
+				//La arista completa la cara IZQUIERDA
+				else
+				{
+					UP(); L(); U(); LP(); UP(); L(); U(); LP(); return; // *WORKING* //
+				}
+			}
 		}
 		//-------------------------------------------------------------------------------------------SI SOLO EL ARISTA ESTA ANCLADA
 		else if (esquinaPos != 7 && aristaPos == 12)
@@ -3917,14 +4000,5 @@ void solveBlock4()
 			
 		}
 		
-	}
-	
-	
-	
-	
-	
-	
-
-	
-	
+	}	
 }
