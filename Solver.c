@@ -119,15 +119,28 @@ int main()
     fflush(stdin);
 
     //Solving phase
-    setBlock1();
-    solveBlock1();
-	setBlock2();
-	solveBlock2();
-	setBlock3();
-	solveBlock3();
-	setBlock4();
+    F2L();
+	OLL();
+	PLL();
 
     //Printing
+    printf("\n\nCara Frontal: \n");
+    printFace(front);
+    
+    printf("\n\nCara Derecha: \n");
+    printFace(right);
+    
+    printf("\n\nCara Trasera: \n");
+    printFace(back);
+    
+    printf("\n\nCara Izquierda: \n");
+    printFace(left);
+    
+    printf("\n\nCara Superior: \n");
+    printFace(up);
+    
+    printf("\n\nCara Inferior: \n");
+    printFace(down);
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////                                         Cross, F2L, OLL, PLL                                  ///////////////////////////////////////////////////////////////////////////////////////////////////////+
@@ -325,7 +338,14 @@ void OLL()
 //F2L
 void F2L()
 {
-    //Mientras F2L No est? resuelto (while), hacer F2L
+    setBlock1();
+    solveBlock1();
+	setBlock2();
+	solveBlock2();
+	setBlock3();
+	solveBlock3();
+	setBlock4();
+	solveBlock4();
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////                                              Funciones auxiliares                                ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -4003,15 +4023,39 @@ void solveBlock4()
 			if (back[1][2] == backColor)
 			{
 				//DownColor en la cara SUJPERIOR
+				if (up[0][0] == downColor)
+				{
+					L(); U(); LP(); UP(); L(); U(); LP(); UP(); L(); U(); LP(); return; // *WORKING* //
+				}
 				//DownColor en la cara TRASERA
+				if (back[0][2] == downColor)
+				{
+					UP(); L(); UP(); LP(); U(); U(); L(); UP(); LP(); return; // *WORKING* //
+				}
 				//DownColor en la cara IZQUIERDA
+				if (left[0][0] == downColor)
+				{
+					U(); BP(); U(); B(); U(); BP(); U(); U(); B(); return; // *WORKING* //
+				}
 			}	
 			// [MAIN] El arista NO esta bien colocada (3)
 			else
 			{
 				//DownColor en la cara SUPERIOR 
+				if (up[0][0] == downColor)
+				{
+					L(); UP(); LP(); U(); BP(); U(); B(); return; // *WORKING* //
+				}
 				//DownColor en la cara TRASERA
+				if (back[0][2] == downColor)
+				{
+					UP(); L(); U(); LP(); U(); BP(); UP(); B(); return; // *WORKING* //
+				}
 				//DownColor en la cara IZQUIERDA
+				if (left[0][0] == downColor)
+				{
+					U(); BP(); UP(); B(); UP(); L(); U(); LP(); return; // *WORKING* //
+				}
 			}
 				
 		}
@@ -4020,15 +4064,203 @@ void solveBlock4()
 		{
 			//Hay 24 Algoritmos posibles
 
-			//Orientar esquina a posicion X
-			
+			//Orientar esquina a posicion 19
+			while (getCornerPosition(4) != 19)
+			{
+				UP();
+			}
 			//[MAIN] Las piezas estan JUNTAS (12)
-				//[O] Las piezas estan JUNTAS HACIA X (6)
-				//[O] Las piezas estan JUNTAS HACIA X (6)
-				
+			if (getEdgePosition(4) == 18 || getEdgePosition(4) == 20)
+			{
+				//[O] Las piezas estan JUNTAS HACIA TRASERA (6)
+				if (getEdgePosition(4) == 18)
+				{
+					//Esquina. DownColor esta en la cara SUPERIOR (2)
+					if (up[0][0] == downColor)
+					{
+						//El arista completa la cara TRASERA
+						if (back[0][1] == backColor)
+						{
+							BP(); U(); U(); B(); U(); BP(); UP(); B(); return; // *WORKING* //
+						}
+						//El arista NO completa la cara TRASERA	
+						else
+						{
+							L(); U(); LP(); UP(); UP(); L(); U(); LP(); UP(); L(); U(); LP(); return; // *WORKING* //
+						}
+					}
+					//Esquina. DownColor esta en la cara TRASERA (2)
+					if (back[0][2] == downColor)
+					{
+						//El arista completa la cara TRASERA
+						if (back[0][1] == backColor)
+						{
+							U(); BP(); U(); B(); UP(); BP(); UP(); B(); return; // *WORKING* //
+						}
+						//El arista NO completa la cara TRASERA
+						else
+						{
+							BP(); U(); B(); UP(); UP(); L(); U(); LP(); return; // *WORKING* //
+						}
+					}
+					//Esquina. DownColor esta en la cara IZQUIERDA (2)
+					if (left[0][0] == downColor)
+					{
+						//El arista completa la cara TRASERA
+						if (back[0][1] == backColor)
+						{
+							UP(); BP(); U(); B(); return; // *WORKING* //
+						}
+						//El arista NO completa la cara TRASERA
+						else
+						{
+							U(); BP(); U(); U(); B(); UP(); L(); U(); LP(); return; // *WORKING* //
+						}
+					}
+				}
+				//[O] Las piezas estan JUNTAS HACIA IZQUIERDA (6)
+				else
+				{
+					//Esquina. DownColor esta en la cara SUPERIOR (2)
+					if (up[0][0] == downColor)
+					{
+						//La arista completa la cara IZQUIERDA
+						if (left[0][1] == leftColor)
+						{
+							L(); U(); U(); LP(); UP(); L(); U(); LP(); return; // *WORKING* //
+						}
+						//la arista NO completa la cara IZQUIERDA
+						else
+						{
+							BP(); UP(); B(); U(); U(); BP(); UP(); B(); U(); BP(); UP(); B(); return; // *WORKING* //
+						}
+					}
+					//Esquina. DownColor esta en la cara TRASERA (2)
+					if (back[0][2] == downColor)
+					{
+						//La arista completa la cara IZQUIERDA
+						if (left[0][1] == leftColor)
+						{
+							U(); L(); UP(); LP(); return; // *WORKING* //
+						}
+						//la arista NO completa la cara IZQUIERDA
+						else
+						{
+							UP(); L(); U(); U(); LP(); U(); BP(); UP(); B(); return; // *WORKING* //
+						}
+					}
+					//Esquina. DownColor esta en la cara IZQUIERDA (2)
+					if (left[0][0] == downColor)
+					{
+						//La arista completa la cara IZQUIERDA
+						if (left[0][1] == leftColor)
+						{
+							UP(); L(); UP(); LP(); U(); L(); U(); LP(); return; // *WORKING* //
+						}
+						//la arista NO completa la cara IZQUIERDA
+						else
+						{
+							L(); UP(); LP(); U(); U(); BP(); UP(); B(); return; // *WORKING* //
+						}
+					}
+				}
+			}	
 			//[MAIN] Las piezas estan SEPARADAS (12)
-				//[I I] Las piezas estan SEPARADAS HACIA X (6)
-				//[I I] Las piezas estan SEPARADAS HACIA X (6)
+			else
+			{
+				//[I I] Las piezas estan SEPARADAS HACIA FRONTAL (6)
+				if (getEdgePosition(4) == 14)
+				{
+					//Esquina. DownColor esta en la cara SUPERIOR (2)
+					if (up[0][0] == downColor)
+					{
+						//Arista. Color TRASERA
+						if (up[2][1] == backColor)
+						{
+							U(); L(); U(); U(); LP(); U(); L(); UP(); LP(); return; // *WORKING* //
+						}
+						//Arista. Color IZQUIERDA
+						else
+						{
+							U(); U(); BP(); UP(); B(); UP(); BP(); U(); B(); return; // *WORKING* //
+						}
+					}
+					//Esquina. DownColor esta en la cara TRASERA (2)
+					if (back[0][2] == downColor)
+					{
+						//Arista. Color TRASERA
+						if (up[2][1] == backColor)
+						{
+							UP(); L(); U(); LP(); UP(); L(); U(); U(); LP(); return; // *WORKING* //
+						}
+						//Arista. Color IZQUIERDA
+						else
+						{
+							U(); BP(); UP(); B(); UP(); BP(); UP(); B(); return; // *WORKING* //
+						}
+					}
+					//Esquina. DownColor esta en la cara IZQUIERDA (2)
+					if (left[0][0] == downColor)
+					{
+						//Arista. Color TRASERA
+						if (up[2][1] == backColor)
+						{
+							L(); U(); LP(); return; // *WORKING
+						}
+						//Arista. Color IZQUIERDA
+						else
+						{
+							U(); BP(); U(); U(); B(); U(); BP(); U(); U(); B(); return; // *WORKING* //
+						}
+					}
+				}
+				//[I I] Las piezas estan SEPARADAS HACIA DERECHA (6)
+				else
+				{
+					//Esquina. DownColor esta en la cara SUPERIOR (2)
+					if (up[0][0] == downColor)
+					{
+						//Arista. Color TRASERA
+						if (up[1][2] == backColor)
+						{
+							U(); U(); L(); U(); LP(); U(); L(); UP(); LP(); return; // *WORKING* //
+						}
+						//Arista. Color IZQUIERDA
+						else
+						{
+							UP(); BP(); U(); U(); B(); UP(); BP(); U(); B(); return; // *WORKING* //
+						}
+					}
+					//Esquina. DownColor esta en la cara TRASERA (2)
+					if (back[0][2] == downColor)
+					{
+						//Arista. Color TRASERA
+						if (up[1][2] == backColor)
+						{
+							UP(); L(); U(); U(); LP(); UP(); L(); U(); U(); LP(); return; // *WORKING* //
+						}
+						//Arista. Color IZQUIERDA
+						else
+						{
+							BP(); UP(); B(); return; // *WORKING* //
+						}
+					}
+					//Esquina. DownColor esta en la cara IZQUIERDA (2)
+					if (left[0][0] == downColor)
+					{
+						//Arista. Color TRASERA
+						if (up[1][2] == backColor)
+						{
+							UP(); L(); U(); LP(); U(); L(); U(); LP(); return; // *WORKING* //
+						}
+						//Arista. Color IZQUIERDA
+						else
+						{
+							U(); BP(); UP(); B(); U(); BP(); U(); U(); B(); return; // *WORKING* //
+						}
+					}
+				}
+			}
 		}
 		
 	}	
