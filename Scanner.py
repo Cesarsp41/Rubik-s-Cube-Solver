@@ -216,7 +216,7 @@ isUpScanned = False
 
 #-----------------------------------------------------Listeners para botones en ventana principal-----------------------------------------------------#
 def botones_listener (event, x, y, flags, param):
-
+    global estado
     if event == cv.EVENT_LBUTTONDOWN:
 
         #-------------------------------------------------ESCANEAR DOWN (BLANCO)#-------------------------------------------------
@@ -258,12 +258,6 @@ def botones_listener (event, x, y, flags, param):
                             colores.append("Naranja")
                         if (pixel[0] == 1) and (pixel[1] == 190) and (pixel[2] == 229):
                             colores.append("Amarillo")
-
-                    #PRUEBA DE IMPRESION
-                    actual = 0
-                    for x, y in downEscaneado:
-                        print(x, y,coloresBase[colores[actual]])
-                        actual+=1
 
                     estado["Down"] = colores
     
@@ -316,12 +310,6 @@ def botones_listener (event, x, y, flags, param):
                         if (pixel[0] == 1) and (pixel[1] == 190) and (pixel[2] == 229):
                             colores.append("Amarillo")
 
-                    #PRUEBA DE IMPRESION
-                    actual = 0
-                    for x, y in frontEscaneado:
-                        print(x, y,coloresBase[colores[actual]])
-                        actual+=1
-
                     estado["Front"] = colores
 
                 #No es la cara correcta
@@ -330,7 +318,6 @@ def botones_listener (event, x, y, flags, param):
                     #Mostrar mensaje error TODO
                     return
         #---------------------------------------------------------------------------------------------------------------------------#
-
 
 
 
@@ -374,12 +361,6 @@ def botones_listener (event, x, y, flags, param):
                         if (pixel[0] == 1) and (pixel[1] == 190) and (pixel[2] == 229):
                             colores.append("Amarillo")
 
-                    #PRUEBA DE IMPRESION
-                    actual = 0
-                    for x, y in rightEscaneado:
-                        print(x, y,coloresBase[colores[actual]])
-                        actual+=1
-
                     estado["Right"] = colores
 
                 #No es la cara correcta
@@ -389,21 +370,176 @@ def botones_listener (event, x, y, flags, param):
                     return
         #---------------------------------------------------------------------------------------------------------------------------#
 
+        #-------------------------------------------------ESCANEAR BACK (VERDE)-----------------------------------------------------#  
         if x >= botonB[0] and x <= botonB[0] + botonAncho and y >= botonB[1] and y <= botonB[1] + botonAlto:
-            print ("Boton D")
 
+            #Usa la variable GLOBAL
+            global isBackScanned
+            
+            #Si la cara ya se escaneo, salir de la funcion
+            if isBackScanned:
+                print("La cara trasera ya fue escaneada")
+                return
+            
+            #Si no se ha escaneado, validar y llenar
+            else:
+                #Tomar el pixel del centro
+                pixel = imagen[57,57]
+
+                #Es la cara correcta?
+                if (pixel[0] == 19) and (pixel[1] == 156) and (pixel[2] == 62):
+                    print("Si hay un centro verde")
+                    print("Cara trasera escaneada correctamente")
+                    isBackScanned = True
+
+                    colores = [] #Lista para almacenar los colores 
+
+                    #Recorrer vistaActual
+                    for x, y in vistaActual:
+                        pixel = imagen[y+5,x+5]
+                        if (pixel[0] == 255) and (pixel[1] == 255) and (pixel[2] == 255):
+                            colores.append("Blanco")
+                        if (pixel[0] == 168) and (pixel[1] == 70) and (pixel[2] == 0):
+                            colores.append("Azul")
+                        if (pixel[0] == 0) and (pixel[1] == 0) and (pixel[2] == 255):
+                            colores.append("Rojo")
+                        if (pixel[0] == 19) and (pixel[1] == 156) and (pixel[2] == 62):
+                            colores.append("Verde")
+                        if (pixel[0] == 0) and (pixel[1] == 128) and (pixel[2] == 255):
+                            colores.append("Naranja")
+                        if (pixel[0] == 1) and (pixel[1] == 190) and (pixel[2] == 229):
+                            colores.append("Amarillo")
+
+                    estado["Back"] = colores
+
+                #No es la cara correcta
+                else:
+                    print("No hay un centro verde, intente otra vez")
+                    #Mostrar mensaje error TODO
+                    return
+        #---------------------------------------------------------------------------------------------------------------------------#
+
+
+        #-------------------------------------------------ESCANEAR LEFT (NARANJA)-----------------------------------------------------#  
         if x >= botonL[0] and x <= botonL[0] + botonAncho and y >= botonL[1] and y <= botonL[1] + botonAlto:
-            print ("Boton L")
 
+            #Usa la variable GLOBAL
+            global isLeftScanned
+            
+            #Si la cara ya se escaneo, salir de la funcion
+            if isLeftScanned:
+                print("La cara izquierda ya fue escaneada")
+                return
+            
+            #Si no se ha escaneado, validar y llenar
+            else:
+                #Tomar el pixel del centro
+                pixel = imagen[57,57]
+
+                #Es la cara correcta?
+                if (pixel[0] == 0) and (pixel[1] == 128) and (pixel[2] == 255):
+                    print("Si hay un centro naranja")
+                    print("Cara izquierda escaneada correctamente")
+                    isLeftScanned = True
+
+                    colores = [] #Lista para almacenar los colores 
+
+                    #Recorrer vistaActual
+                    for x, y in vistaActual:
+                        pixel = imagen[y+5,x+5]
+                        if (pixel[0] == 255) and (pixel[1] == 255) and (pixel[2] == 255):
+                            colores.append("Blanco")
+                        if (pixel[0] == 168) and (pixel[1] == 70) and (pixel[2] == 0):
+                            colores.append("Azul")
+                        if (pixel[0] == 0) and (pixel[1] == 0) and (pixel[2] == 255):
+                            colores.append("Rojo")
+                        if (pixel[0] == 19) and (pixel[1] == 156) and (pixel[2] == 62):
+                            colores.append("Verde")
+                        if (pixel[0] == 0) and (pixel[1] == 128) and (pixel[2] == 255):
+                            colores.append("Naranja")
+                        if (pixel[0] == 1) and (pixel[1] == 190) and (pixel[2] == 229):
+                            colores.append("Amarillo")
+
+                    estado["Left"] = colores
+
+                #No es la cara correcta
+                else:
+                    print("No hay un centro naranja, intente otra vez")
+                    #Mostrar mensaje error TODO
+                    return
+        #---------------------------------------------------------------------------------------------------------------------------#
+
+        #-------------------------------------------------ESCANEAR UP (AMARILLO)-----------------------------------------------------# 
         if x >= botonU[0] and x <= botonU[0] + botonAncho and y >= botonU[1] and y <= botonU[1] + botonAlto:
-            print ("Boton U")
+
+            #Usa la variable GLOBAL
+            global isUpScanned
+            
+            #Si la cara ya se escaneo, salir de la funcion
+            if isUpScanned:
+                print("La cara superior ya fue escaneada")
+                return
+            
+            #Si no se ha escaneado, validar y llenar
+            else:
+                #Tomar el pixel del centro
+                pixel = imagen[57,57]
+
+                #Es la cara correcta?
+                if (pixel[0] == 1) and (pixel[1] == 190) and (pixel[2] == 229):
+                    print("Si hay un centro amarillo")
+                    print("Cara superior escaneada correctamente")
+                    isUpScanned = True
+
+                    colores = [] #Lista para almacenar los colores 
+
+                    #Recorrer vistaActual
+                    for x, y in vistaActual:
+                        pixel = imagen[y+5,x+5]
+                        if (pixel[0] == 255) and (pixel[1] == 255) and (pixel[2] == 255):
+                            colores.append("Blanco")
+                        if (pixel[0] == 168) and (pixel[1] == 70) and (pixel[2] == 0):
+                            colores.append("Azul")
+                        if (pixel[0] == 0) and (pixel[1] == 0) and (pixel[2] == 255):
+                            colores.append("Rojo")
+                        if (pixel[0] == 19) and (pixel[1] == 156) and (pixel[2] == 62):
+                            colores.append("Verde")
+                        if (pixel[0] == 0) and (pixel[1] == 128) and (pixel[2] == 255):
+                            colores.append("Naranja")
+                        if (pixel[0] == 1) and (pixel[1] == 190) and (pixel[2] == 229):
+                            colores.append("Amarillo")
+
+                    estado["Up"] = colores
+
+                #No es la cara correcta
+                else:
+                    print("No hay un centro amarillo, intente otra vez")
+                    #Mostrar mensaje error TODO
+                    return
+        #---------------------------------------------------------------------------------------------------------------------------#
 
         if x >= botonTerminar[0] and x <= botonTerminar[0] + botonAncho and y >= botonTerminar[1] and y <= botonTerminar[1] + botonAlto:
+            #TODO
             print ("Boton Terminar")
 
+        #----------------------------------------------------------Reiniciar----------------------------------------------------------#
         if x >= botonReiniciar[0] and x <= botonReiniciar[0] + botonAncho and y >= botonReiniciar[1] and y <= botonReiniciar[1] + botonAlto:
-            print ("Boton Reiniciar")
+            #Devolver banderas a False y reiniciar estado de cubo
+            isDownScanned = False
+            isFrontScanned = False
+            isRightScanned = False
+            isBackScanned = False
+            isLeftScanned = False
+            isUpScanned = False
 
+            estado = {
+                "Down" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"],
+                "Front" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"],
+                "Right" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"],
+                "Back" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"],
+                "Left" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"],
+                "Up" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"]
+            }
 #-----------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
