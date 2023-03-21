@@ -1,26 +1,27 @@
 import numpy as np
 import cv2 as cv
 
-#Diccionario ESTADO = {} con todas las piezas blancas
+#Diccionario ESTADO = {} con todas las piezas grises
+estado = {
+    "Down" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"],
+    "Front" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"],
+    "Right" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"],
+    "Back" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"],
+    "Left" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"],
+    "Up" : ["Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris","Gris"]
+}
 
 #Convencion de colores y caras
-convencion = {
-    "Blanco" : 'D',
-    "Azul" : 'F',
-    "Rojo" : 'R',
-    "Verde" : 'B',
-    "Naranja" : 'L',
-    "Amarillo" : 'U'
-}
+convencion = { "Blanco" : 'D', "Azul" : 'F', "Rojo" : 'R', "Verde" : 'B', "Naranja" : 'L', "Amarillo" : 'U'}
 
 #Diccionario de colores enteros
 coloresInt = {
     1: "Blanco",
-    1: "Blanco",
-    1: "Blanco",
-    1: "Verde",
-    1: "Naranja",
-    1: "Amarillo"}
+    2: "Azul",
+    3: "Rojo",
+    4: "Verde",
+    5: "Naranja",
+    6: "Amarillo"}
 
 #Valores BGR para dibujar figuras
 coloresBase = {
@@ -30,54 +31,47 @@ coloresBase = {
     "Verde" : (19,156,62),
     "Naranja" : (0,128,255),
     "Amarillo" : (1,190,229),
-    "Negro" : (0,0,0) #Testing purposes only ***
+    "Negro" : (0,0,0),
+    "Gris" : (155,155,155)
 }
 
-
 #--------------Coordenadas para dibujar las caras que han sido escaneadas 
-
-#Down Escaneado
-downEscaneado = [
+coordenadasEscaneados = {
+    "Down" : [
     [160,310], [205,310], [250,310],
     [160,355], [205,355], [250,355],
-    [160,400], [205,400], [250,400]
-]
-
-#Front Escaneado
-frontEscaneado  = [
+    [160,400], [205,400], [250,400]],
+    "Front" : [
     [160,160], [205,160], [250,160],
     [160,205], [205,205], [250,205],
-    [160,250], [205,250], [250,250]
-]
-
-#Right Escaneado
-rightEscaneado = [
+    [160,250], [205,250], [250,250]],
+    "Right" : [
     [310,160], [355,160], [400,160],
     [310,205], [355,205], [400,205],
-    [310,250], [355,250], [400,250]
-]
-
-#Back Escaneado
-backEscaneado = [
+    [310,250], [355,250], [400,250]],
+    "Back" : [
     [460,160], [505,160], [550,160],
     [460,205], [505,205], [550,205],
-    [460,250], [505,250], [550,250]
-]
-
-#Left Escaneado
-leftEscaneado = [
+    [460,250], [505,250], [550,250]],
+    "Left" : [
     [10,160], [55,160], [100,160],
     [10,205], [55,205], [100,205],
-    [10,250], [55,250], [100,250]
-]
-
-#Up Escaneado
-upEscaneado = [
+    [10,250], [55,250], [100,250]],
+    "Up" : [
     [160,10], [205,10], [250,10],
     [160,55], [205,55], [250,55],
-    [160,100], [205,100], [250,100]
-]
+    [160,100], [205,100], [250,100]]
+}
+
+#Duplicados (Omptimizar luego)
+downEscaneado = [[160,310], [205,310], [250,310],[160,355], [205,355], [250,355], [160,400], [205,400], [250,400]]
+frontEscaneado  = [[160,160], [205,160], [250,160],[160,205], [205,205], [250,205],[160,250], [205,250], [250,250]]
+rightEscaneado = [[310,160], [355,160], [400,160],[310,205], [355,205], [400,205],[310,250], [355,250], [400,250]]
+backEscaneado = [[460,160], [505,160], [550,160],[460,205], [505,205], [550,205],[460,250], [505,250], [550,250]]
+leftEscaneado = [[10,160], [55,160], [100,160],[10,205], [55,205], [100,205],[10,250], [55,250], [100,250]]
+upEscaneado = [[160,10], [205,10], [250,10],[160,55], [205,55], [250,55],[160,100], [205,100], [250,100]]
 #--------------Coordenadas para dibujar las caras que han sido escaneadas 
+
 
 
 #-------------Coodernadas de los ROI 30x30----------------------------#
@@ -93,7 +87,6 @@ vistaActual = [
     [20, 54], [54, 54], [88, 54],
     [20, 88], [54, 88], [88, 88]
 ]
-
 
 #------------Coordenadas de las letras----------------------------#
 letraD = [215,385] 
@@ -186,34 +179,19 @@ def dibujarBotones(frame):
     cv.putText(frame, "Terminar", (botonTerminar[0] + 45, botonTerminar[1] + 32), fuente, 0.65, coloresBase["Blanco"], 2)
     cv.putText(frame, "Reiniciar", (botonReiniciar[0] + 45, botonReiniciar[1] + 32), fuente, 0.65, coloresBase["Blanco"], 2)
 
-#-----------------------------Dibujar Vista escaneada en GRIS----------------------------------#
-def dibujarEscaneosGris (frame) :
+#------------------------------------Dibujar Escaneados en tiempo real----------------------------------------# *************************************************PROBANDO
+def dibujarEscaneados (frame, coordenadasEscaneados, estado):
 
-    #Down
-    for x, y in downEscaneado:
-        cv.rectangle(frame, (x,y), (x+40, y+40), (155,155,155), -1)
-    
-    #Front
-    for x, y in frontEscaneado:
-        cv.rectangle(frame, (x,y), (x+40, y+40), (155,155,155), -1)
+    for lado in estado:
+        posicion = 0
+        for x,y in coordenadasEscaneados[lado]:
+            #Recorre los 9 cuadros de cada LADO
+            couleur = estado[lado][posicion]
+            cv.rectangle(frame, (x,y), (x+40, y+40), coloresBase[couleur], -1)
+            posicion +=1
 
-    #Right
-    for x, y in rightEscaneado:
-        cv.rectangle(frame, (x,y), (x+40, y+40), (155,155,155), -1)
+#-------------------------------------------------------------------------------------------------------------#
 
-    #Back
-    for x, y in backEscaneado:
-        cv.rectangle(frame, (x,y), (x+40, y+40), (155,155,155), -1)
-
-    #Left
-    for x, y in leftEscaneado:
-        cv.rectangle(frame, (x,y), (x+40, y+40), (155,155,155), -1)
-
-    #Up
-    for x, y in upEscaneado:
-        cv.rectangle(frame, (x,y), (x+40, y+40), (155,155,155), -1)
-
-#-----------------------------------------------------------------------------------------#
 
 #----------------------------Dibujar texto en escaneos guardados---------------------------#
 def dibujarTexto(frame):
@@ -257,16 +235,13 @@ def botones_listener (event, x, y, flags, param):
                 #Tomar el pixel del centro
                 pixel = imagen[57,57]
                 
-                #Cerrar cualquier ventana de escaneos que exista
-                cv.destroyWindow("Escaneos")
-
                 #Es la cara correcta?
                 if (pixel[0] == 255) and (pixel[1] == 255) and (pixel[2] == 255):
                     print("Si hay un centro blanco")
                     print("Cara inferior escaneada correctamente")
                     isDownScanned = True
 
-                    colores = [] #Lista para almacenar los colores para dibujar en Frame2
+                    colores = [] #Lista para almacenar los colores 
 
                     #Recorrer vistaActual
                     for x, y in vistaActual:
@@ -284,27 +259,135 @@ def botones_listener (event, x, y, flags, param):
                         if (pixel[0] == 1) and (pixel[1] == 190) and (pixel[2] == 229):
                             colores.append("Amarillo")
 
-                    #Llenar el frame 2
+                    #PRUEBA DE IMPRESION
                     actual = 0
                     for x, y in downEscaneado:
                         print(x, y,coloresBase[colores[actual]])
-                        #cv.rectangle(frame, (x,y), (x+40, y+40), coloresBase[colores[actual]], -1)
                         actual+=1
 
+                    estado["Down"] = colores
+    
                 #No es la cara correcta
                 else:
                     print("No hay un centro blanco, intente otra vez")
                     #Mostrar mensaje error TODO
-                    return
-                                
-        #----------------------------------------------------------------------------------------------------------------------------       
+                    return        
+        #---------------------------------------------------------------------------------------------------------------------------#       
                 
-                
-        if x >= botonF[0] and x <= botonF[0] + botonAncho and y >= botonF[1] and y <= botonF[1] + botonAlto:
-            print ("Boton F")
 
+
+        #-------------------------------------------------ESCANEAR FRONT (AZUL)-----------------------------------------------------#     
+        if x >= botonF[0] and x <= botonF[0] + botonAncho and y >= botonF[1] and y <= botonF[1] + botonAlto:
+
+            #Usa la variable GLOBAL
+            global isFrontScanned
+            
+            #Si la cara ya se escaneo, salir de la funcion
+            if isFrontScanned:
+                print("La cara frontal ya fue escaneada")
+                return
+            
+            #Si no se ha escaneado, validar y llenar
+            else:
+                #Tomar el pixel del centro
+                pixel = imagen[57,57]
+
+                #Es la cara correcta?
+                if (pixel[0] == 168) and (pixel[1] == 70) and (pixel[2] == 0):
+                    print("Si hay un centro azul")
+                    print("Cara frontal escaneada correctamente")
+                    isFrontScanned = True
+
+                    colores = [] #Lista para almacenar los colores 
+
+                    #Recorrer vistaActual
+                    for x, y in vistaActual:
+                        pixel = imagen[y+5,x+5]
+                        if (pixel[0] == 255) and (pixel[1] == 255) and (pixel[2] == 255):
+                            colores.append("Blanco")
+                        if (pixel[0] == 168) and (pixel[1] == 70) and (pixel[2] == 0):
+                            colores.append("Azul")
+                        if (pixel[0] == 0) and (pixel[1] == 0) and (pixel[2] == 255):
+                            colores.append("Rojo")
+                        if (pixel[0] == 19) and (pixel[1] == 156) and (pixel[2] == 62):
+                            colores.append("Verde")
+                        if (pixel[0] == 0) and (pixel[1] == 128) and (pixel[2] == 255):
+                            colores.append("Naranja")
+                        if (pixel[0] == 1) and (pixel[1] == 190) and (pixel[2] == 229):
+                            colores.append("Amarillo")
+
+                    #PRUEBA DE IMPRESION
+                    actual = 0
+                    for x, y in frontEscaneado:
+                        print(x, y,coloresBase[colores[actual]])
+                        actual+=1
+
+                    estado["Front"] = colores
+
+                #No es la cara correcta
+                else:
+                    print("No hay un centro azul, intente otra vez")
+                    #Mostrar mensaje error TODO
+                    return
+        #---------------------------------------------------------------------------------------------------------------------------#
+
+
+
+
+        #-------------------------------------------------ESCANEAR RIGHT (ROJO)-----------------------------------------------------#  
         if x >= botonR[0] and x <= botonR[0] + botonAncho and y >= botonR[1] and y <= botonR[1] + botonAlto:
-            print ("Boton R")
+
+            #Usa la variable GLOBAL
+            global isRightScanned
+            
+            #Si la cara ya se escaneo, salir de la funcion
+            if isRightScanned:
+                print("La cara derecha ya fue escaneada")
+                return
+            
+            #Si no se ha escaneado, validar y llenar
+            else:
+                #Tomar el pixel del centro
+                pixel = imagen[57,57]
+
+                #Es la cara correcta?
+                if (pixel[0] == 0) and (pixel[1] == 0) and (pixel[2] == 255):
+                    print("Si hay un centro rojo")
+                    print("Cara derecha escaneada correctamente")
+                    isRightScanned = True
+
+                    colores = [] #Lista para almacenar los colores 
+
+                    #Recorrer vistaActual
+                    for x, y in vistaActual:
+                        pixel = imagen[y+5,x+5]
+                        if (pixel[0] == 255) and (pixel[1] == 255) and (pixel[2] == 255):
+                            colores.append("Blanco")
+                        if (pixel[0] == 168) and (pixel[1] == 70) and (pixel[2] == 0):
+                            colores.append("Azul")
+                        if (pixel[0] == 0) and (pixel[1] == 0) and (pixel[2] == 255):
+                            colores.append("Rojo")
+                        if (pixel[0] == 19) and (pixel[1] == 156) and (pixel[2] == 62):
+                            colores.append("Verde")
+                        if (pixel[0] == 0) and (pixel[1] == 128) and (pixel[2] == 255):
+                            colores.append("Naranja")
+                        if (pixel[0] == 1) and (pixel[1] == 190) and (pixel[2] == 229):
+                            colores.append("Amarillo")
+
+                    #PRUEBA DE IMPRESION
+                    actual = 0
+                    for x, y in rightEscaneado:
+                        print(x, y,coloresBase[colores[actual]])
+                        actual+=1
+
+                    estado["Right"] = colores
+
+                #No es la cara correcta
+                else:
+                    print("No hay un centro rojo, intente otra vez")
+                    #Mostrar mensaje error TODO
+                    return
+        #---------------------------------------------------------------------------------------------------------------------------#
 
         if x >= botonB[0] and x <= botonB[0] + botonAncho and y >= botonB[1] and y <= botonB[1] + botonAlto:
             print ("Boton D")
@@ -327,23 +410,14 @@ def botones_listener (event, x, y, flags, param):
 
 
 
-#--------------------------------------------------------------Funcion de caliz----------------------------------------------------------------------#
-#----------------------------------------------------------------------------------------------------------------------------------------------------#
-
-
-
-
-
-
-
 #Matriz de 0's para dibujar Escaneos Guardados
 escaneos = np.zeros((500,700,3), dtype='uint8')
 
 while True:
+    
 
     #Valores HSV de ROIS
     hsv = []
-
     ret, imagen = cap.read()
     frame = cv.cvtColor(imagen, cv.COLOR_BGR2HSV)
 
@@ -354,7 +428,7 @@ while True:
     dibujarBotones(imagen)
 
     #Vetana de estado del cubo
-    dibujarEscaneosGris(escaneos)
+    dibujarEscaneados (escaneos, coordenadasEscaneados, estado)
     dibujarTexto(escaneos)
 
     #Guardar valores HSV
@@ -371,8 +445,7 @@ while True:
     #Mostrar ventanas y agregar listeners
     cv.imshow ("Escanear",imagen)
     cv.imshow("Escaneos", escaneos)
-    cv.setMouseCallback ("Escanear", botones_listener, param=[imagen,escaneos])
-
+    cv.setMouseCallback ("Escanear", botones_listener, param=imagen)
 
     #Condicion de salida
     if cv.waitKey(20) & 0xFF == ord('q'):
